@@ -1,8 +1,9 @@
 package business.dto;
 
 /**
- *@author 
  *도서 카테고리와 관련된 DTO 클래스 
+ *@author 황태윤
+ *@since 2025.03.27
  */
 public class BookCategory {
     // 필드 추가
