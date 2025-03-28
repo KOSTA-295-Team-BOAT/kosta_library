@@ -1,7 +1,7 @@
 package business.dto;
 
 /**
- *이용자 정보와 관련된 DTO 클래스 
+ *회원 정보와 관련된 DTO 클래스 
  *@author 황태윤
  *@since 2025.03.27
  */
@@ -10,7 +10,7 @@ public class User {
     private String userId;
     private String userPassword;
     private int courseUid;
-    private int categoryUid; // null 불가능
+    private int categoryUid; // null 허용
     private int userStatus;
     private int userScore;
 
