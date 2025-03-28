@@ -113,6 +113,14 @@ ALTER TABLE `course_recommend` ADD CONSTRAINT `FK_book_TO_course_recommend_1`
 FOREIGN KEY (`book_uid`) REFERENCES `book` (`book_uid`);
 
 select * from user;
+select * from course;
 
 INSERT INTO user (user_id, user_password, course_uid, category_uid, user_status, user_score) VALUES (?, ?, ?, ?, ?, ?);
+
+INSERT INTO course (course_uid,course_name, course_open, course_graduate_date)
+VALUES 
+(1,'다크소울 만들기', 1, '2025-12-30'),
+(null, '몬스터 헌터 만들기', 1, '2026-02-30'),
+(null, '닌자 가이덴 만들기', 1, '2027-03-29');
+
 
