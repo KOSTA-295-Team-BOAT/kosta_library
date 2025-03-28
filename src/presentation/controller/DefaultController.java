@@ -8,6 +8,6 @@ import business.dto.*;
 public class DefaultController {
 	
 	BookController bookController = new BookController();
-	UserController rentController = new UserController();	
+	UserController rentController = new UserController(null);
 	
 }
