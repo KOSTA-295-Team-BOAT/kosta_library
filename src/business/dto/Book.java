@@ -11,8 +11,8 @@ public class Book {
     private String bookAuthor;
     private String bookPublisher;
     private int categoryUid;
-    private Integer categoryUid2;
-    private Integer categoryUid3;
+    private int categoryUid2; 
+    private int categoryUid3; 
     private String bookStoreDate;
     private int bookStatus;
 
@@ -20,7 +20,7 @@ public class Book {
     public Book() {}
 
     // 모든 필드를 포함한 생성자
-    public Book(int bookUid, String bookName, String bookAuthor, String bookPublisher, int categoryUid, Integer categoryUid2, Integer categoryUid3, String bookStoreDate, int bookStatus) {
+    public Book(int bookUid, String bookName, String bookAuthor, String bookPublisher, int categoryUid, int categoryUid2, int categoryUid3, String bookStoreDate, int bookStatus) {
         this.bookUid = bookUid;
         this.bookName = bookName;
         this.bookAuthor = bookAuthor;
@@ -73,19 +73,19 @@ public class Book {
         this.categoryUid = categoryUid;
     }
 
-    public Integer getCategoryUid2() {
+    public int getCategoryUid2() { 
         return categoryUid2;
     }
 
-    public void setCategoryUid2(Integer categoryUid2) {
+    public void setCategoryUid2(int categoryUid2) {
         this.categoryUid2 = categoryUid2;
     }
 
-    public Integer getCategoryUid3() {
+    public int getCategoryUid3() {
         return categoryUid3;
     }
 
-    public void setCategoryUid3(Integer categoryUid3) {
+    public void setCategoryUid3(int categoryUid3) {
         this.categoryUid3 = categoryUid3;
     }
 
