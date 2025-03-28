@@ -112,13 +112,7 @@ FOREIGN KEY (`course_uid`) REFERENCES `course` (`course_uid`);
 ALTER TABLE `course_recommend` ADD CONSTRAINT `FK_book_TO_course_recommend_1`
 FOREIGN KEY (`book_uid`) REFERENCES `book` (`book_uid`);
 
--- 회원가입을 위한 임시 내용 추가
-INSERT INTO `course` (course_name, course_open, course_graduate_date)
-VALUES ('Java Basic', 1, '2025-12-31 00:00:00'); 
-
-
-INSERT INTO `user` (user_id, user_password, course_uid, category_uid, user_status, user_score)
-VALUES ('흐음맨', '1234', 1, NULL, 0, 5);
-
 select * from user;
+
+INSERT INTO user (user_id, user_password, course_uid, category_uid, user_status, user_score) VALUES (?, ?, ?, ?, ?, ?);
 

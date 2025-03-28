@@ -23,21 +23,22 @@ public class UserRegistration {
             return false;
         }
 
-        // 2. 비밀번호 유효성 검사 (예: 최소 길이, 특수 문자 포함 여부 등)
+        // 2. 비밀번호 유효성 검사 (예: 최소 4자 이상)
         if (!isValidPassword(user.getUserPassword())) {
             System.out.println("비밀번호가 유효하지 않습니다.");
+            System.out.println("비밀번호는 최소 4자 이상이어야 합니다.");
             return false;
         }
 
         // 3. 사용자 등록
         userDao.addUser(user);
-        System.out.println("회원가입이 성공적으로 완료되었습니다.");
+        System.out.println("회원가입이 성공적으로 완료되었습니다."); // 성공 메시지 출력
         return true;
     }
 
     // 비밀번호 유효성 검사 메서드
     private boolean isValidPassword(String password) {
-        // 예: 비밀번호는 최소 8자 이상이어야 함
-        return password != null && password.length() >= 8;
+        // 예: 비밀번호는 최소 4자 이상이어야 함
+        return password != null && password.length() >= 4;
     }
 }
