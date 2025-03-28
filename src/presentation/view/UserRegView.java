@@ -102,7 +102,7 @@ public class UserRegView {
             String confirm = sc.nextLine();
 
                 if ("Y".equalsIgnoreCase(confirm)) {
-                    return new User(userId, password, 1, 0, 0, 5); // 기본값 설정
+                    return new User(userId, password, 1, 0, 0, 5); // 기본값 설정 기능 추가 TODO course 입력받는 기능 추가하고 입력받은 값 사용
                 } else if ("N".equalsIgnoreCase(confirm)) {
                     System.out.println("다시 입력 화면으로 돌아갑니다.");
                     break; // 루프 종료
