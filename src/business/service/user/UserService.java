@@ -1,9 +1,9 @@
 package business.service.user;
 
+import java.util.List;
+
 import business.dto.User;
 import repository.dao.UserDao;
-
-import java.util.List;
 
 /**
  * 사용자 정보와 관련된 비즈니스 로직을 담당하는 클래스
@@ -47,5 +47,10 @@ public class UserService {
     public void deleteUser(String userId) {
         // 비즈니스 로직 추가 가능 (예: 삭제 전 확인 작업)
         userDao.deleteUser(userId);
+    }
+
+    // 로그인 검증
+    public boolean isValidUser(String userId, String password) {
+        return userDao.isValidUser(userId, password);
     }
 }

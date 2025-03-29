@@ -24,4 +24,7 @@ public interface UserDao {
 
     // 회원 삭제
     void deleteUser(String userId);
+
+    // 로그인 검증 메서드
+    boolean isValidUser(String userId, String password);
 }

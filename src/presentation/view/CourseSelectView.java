@@ -1,8 +1,8 @@
 package presentation.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 import business.dto.Course;
 import repository.dao.CourseDao;

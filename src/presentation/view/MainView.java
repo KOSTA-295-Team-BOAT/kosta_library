@@ -1,34 +1,26 @@
 package presentation.view;
 
+import business.dto.User; 
+import presentation.controller.UserController;
+import presentation.view.UserRegView; 
+import presentation.view.LoginView; 
+
 import java.util.Scanner;
 
-import business.dto.User;
-
-/**
- * 프로젝트 실행을 위한 메인 메소드 클래스
- */
 public class MainView {
 
     public static void main(String[] args) {
-        // 메인뷰 객체 생성
         MainView mainView = new MainView();
+        UserController userController = new UserController(); // UserController 초기화
         int menu;
 
         do {
-            // 메인뷰 출력
             mainView.printMainView();
-            // 메뉴 선택
             menu = mainView.selectMenu();
 
             switch (menu) {
                 case 1: // 로그인
-                    LoginView loginView = new LoginView();
-                    loginView.printLoginView();
-                    if (loginView.inputLoginInfo()) {
-                        System.out.println("로그인 성공!");
-                    } else {
-                        System.out.println("로그인 실패! 다시 시도해주세요.");
-                    }
+                    userController.handleLogin(); // 로그인 처리 호출
                     break;
 
                 case 2: // 회원가입
@@ -36,9 +28,7 @@ public class MainView {
                     userRegView.printUserRegView(); // 회원가입 화면 출력
                     User user = userRegView.inputUserRegInfo();
                     if (user != null) {
-                        // 뷰가 직접 UserDao나 UserRegistration을 생성하지 않음
-                        presentation.controller.UserController regController = new presentation.controller.UserController();
-                        if (regController.registerUser(user)) {
+                        if (userController.registerUser(user)) { 
                             System.out.println("가입이 완료되었습니다. 로그인 화면으로 이동합니다.");
                             LoginView loginView1 = new LoginView();
                             loginView1.printLoginView();
