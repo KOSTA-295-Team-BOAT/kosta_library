@@ -2,7 +2,6 @@ package presentation.view;
 
 import java.util.Scanner;
 import business.dto.User;
-import presentation.view.CourseSelectView;
 
 /**
  * 메인뷰에서 회원가입 부분을 출력해주는 클래스
@@ -67,7 +66,6 @@ public class UserRegView {
      * @return 모든 입력이 올바르고 최종 확인이 되면 User 객체, 그렇지 않으면 null
      */
     public User inputUserRegInfo() {
-        CourseSelectView courseSelectView = new CourseSelectView(); // 과정 선택 뷰 객체 생성
         while (true) { // 반복 루프 시작
             System.out.print("회원가입을 취소하고 메인화면으로 돌아가시겠습니까? (Y/N): ");
             String backToMain = sc.nextLine();
@@ -92,17 +90,10 @@ public class UserRegView {
                 continue; // 입력이 부족하면 다시 입력받음
             }
 
-            int courseUid = courseSelectView.selectCourse(); // 과정 선택 호출
-            if (courseUid == -1) {
-                System.out.println("과정 선택이 취소되었습니다. 다시 회원가입을 진행해주세요.");
-                continue;
-            }
-
             // 입력한 정보 출력
             System.out.println("입력하신 회원정보는 다음과 같습니다:");
             System.out.println("아이디: " + userId);
             System.out.println("비밀번호: " + password);
-            System.out.println("선택한 과정 ID: " + courseUid);
             
             while (true) { // 반복 루프 추가
 
@@ -111,7 +102,7 @@ public class UserRegView {
             String confirm = sc.nextLine();
 
                 if ("Y".equalsIgnoreCase(confirm)) {
-                    return new User(userId, password, courseUid, 0, 0, 5);
+                    return new User(userId, password, 1, 0, 0, 5); // 기본값 설정 기능 추가 TODO course 입력받는 기능 추가하고 입력받은 값 사용
                 } else if ("N".equalsIgnoreCase(confirm)) {
                     System.out.println("다시 입력 화면으로 돌아갑니다.");
                     break; // 루프 종료

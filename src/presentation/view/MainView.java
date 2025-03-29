@@ -24,6 +24,7 @@ public class MainView {
                     break;
 
                 case 2: // 회원가입
+
                     userController.handleRegistration();
                     break;
 
