@@ -85,4 +85,22 @@ public class UserController {
             loginView.printLoginFail();
         }
     }
+    
+    // 회원가입 후 로그인 화면으로 전환하는 메서드 
+    public void handleRegistration() {
+        presentation.view.UserRegView userRegView = new presentation.view.UserRegView();
+        userRegView.printUserRegView();
+        business.dto.User user = userRegView.inputUserRegInfo();
+        if (user != null) {
+            if (registerUser(user)) {
+                userRegView.printUserRegSuccess();
+                // 자동으로 로그인 화면으로 전환
+                handleLogin();
+            } else {
+                userRegView.printUserRegCancel();
+            }
+        } else {
+            userRegView.printUserRegCancel();
+        }
+    }
 }

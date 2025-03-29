@@ -42,7 +42,6 @@ public class UserRegistration {
 
         // 4. 사용자 등록
         userDao.addUser(user);
-        System.out.println("회원가입이 성공적으로 완료되었습니다."); // 성공 메시지 출력
         return true;
     }
 

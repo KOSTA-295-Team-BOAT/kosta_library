@@ -24,20 +24,7 @@ public class MainView {
                     break;
 
                 case 2: // 회원가입
-                    UserRegView userRegView = new UserRegView();
-                    userRegView.printUserRegView(); // 회원가입 화면 출력
-                    User user = userRegView.inputUserRegInfo();
-                    if (user != null) {
-                        if (userController.registerUser(user)) { 
-                            System.out.println("가입이 완료되었습니다. 로그인 화면으로 이동합니다.");
-                            LoginView loginView1 = new LoginView();
-                            loginView1.printLoginView();
-                        } else {
-                            userRegView.printUserRegCancel();
-                        }
-                    } else {
-                        userRegView.printUserRegCancel();
-                    }
+                    userController.handleRegistration();
                     break;
 
                 case 3: // 프로그램 종료
@@ -52,7 +39,7 @@ public class MainView {
 
     public void printMainView() {
         System.out.println("[ B.O.A.T ]");
-        System.out.println("===== 메인 메뉴 =====");
+        System.out.println("===== 시작 메뉴 =====");
         System.out.println("1. 로그인");
         System.out.println("2. 회원가입");
         System.out.println("3. 종료");

@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class LoginView {
 
     public String[] inputLoginInfo() {
+    	System.out.println("===== 로그인 화면 =====");
         Scanner scanner = new Scanner(System.in);
         System.out.print("ID를 입력하세요: ");
         String id = scanner.nextLine();
@@ -23,11 +24,5 @@ public class LoginView {
 
     public void printLoginFail() {
         System.out.println("로그인 실패! ID 또는 비밀번호를 확인해주세요.");
-    }
-
-    // 로그인 화면 출력 메서드 추가
-    public void printLoginView() {
-        System.out.println("===== 로그인 화면 =====");
-        System.out.println("ID와 비밀번호를 입력해주세요.");
     }
 }
