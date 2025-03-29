@@ -113,9 +113,22 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-	@Override
-	public boolean isValidUser(String userId, String password) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean isValidUser(String userId, String password) {
+        String sql = "SELECT user_id, user_password FROM user WHERE user_id = ? AND user_password = ?";
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            ps.setString(2, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("isValidUser 실행 중 오류 발생: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

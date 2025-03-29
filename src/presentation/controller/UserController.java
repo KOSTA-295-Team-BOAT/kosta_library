@@ -81,6 +81,7 @@ public class UserController {
 
         if (userService.isValidUser(id, password)) {
             loginView.printLoginSuccess();
+            new presentation.view.MainMenuView().display();
         } else {
             loginView.printLoginFail();
         }
