@@ -115,4 +115,10 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
         }
     }
+
+	@Override
+	public boolean isValidUser(String userId, String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

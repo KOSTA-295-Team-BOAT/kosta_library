@@ -1,6 +1,8 @@
 package repository.dao;
 
 import business.dto.Book;
+
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -11,14 +13,24 @@ public interface BookDao {
     void addBook(Book book);
 
     // 도서 ID로 조회
-    Book getBookById(int bookUid);
+    Book getBookById(int bookUid) throws SQLException;
 
     // 모든 도서 조회
-    List<Book> getAllBooks();
+    List<Book> getAllBooks() throws SQLException;
 
     // 도서 업데이트
-    void updateBook(Book book);
+    void updateBook(Book book)throws SQLException;
 
     // 도서 삭제
-    void deleteBook(int bookUid);
+    void deleteBook(int bookUid) throws SQLException;
+    
+    //도서명으로 검색
+    public List<Book> getBookByBookName(String name) throws SQLException;
+
+    //출판사로 검색
+	public List<Book> getBookByBookPublisher(String name) throws SQLException;
+
+	//저자로 검색
+	public List<Book> getBookByAuthor(String name) throws SQLException;
+
 }
