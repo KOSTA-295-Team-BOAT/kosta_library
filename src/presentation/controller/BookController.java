@@ -15,7 +15,7 @@ import exception.SearchWrongException;
  */
 public class BookController {
 	
-	BookController(){
+	public BookController(){
 		
 	}
 	
@@ -33,7 +33,7 @@ public class BookController {
 		return returnBookList;
 	}
 
-	public List<Book> getBookByAuthor(String name) {					
+	public List<Book> getBookByBookAuthor(String name) {					
 		BookSearch search = new BookSearch();
 		List<Book> returnBookList = null;
 		try {
