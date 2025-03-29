@@ -15,7 +15,7 @@ public class MainMenuView {
 					new BookRecommendView().display();
 					break;
 				case 2:
-					new BookSerachView().display();
+//					new BookSerachView().display(); // 구현후 주석해제
 					break;
 				case 3:
 					new MypageView().display();
