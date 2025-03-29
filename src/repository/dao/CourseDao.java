@@ -16,9 +16,4 @@ public interface CourseDao {
     // 모든 과정 조회
     List<Course> getAllCourses();
 
-    // 과정 업데이트
-    void updateCourse(Course course);
-
-    // 과정 삭제
-    void deleteCourse(int courseUid);
 }

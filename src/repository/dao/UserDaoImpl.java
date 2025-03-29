@@ -17,7 +17,6 @@ public class UserDaoImpl implements UserDao {
         String sql = "INSERT INTO user (user_id, user_password, course_uid, category_uid, user_status, user_score) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = DbManager.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            System.out.println("DB 연결 성공: addUser 메서드 실행 중"); // 디버깅 메시지
             ps.setString(1, user.getUserId());
             ps.setString(2, user.getUserPassword());
             ps.setInt(3, user.getCourseUid());
@@ -36,7 +35,6 @@ public class UserDaoImpl implements UserDao {
         String sql = "SELECT * FROM user WHERE user_id = ?";
         try (Connection con = DbManager.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            System.out.println("DB 연결 성공: getUserById 메서드 실행 중"); // 디버깅 메시지
             ps.setString(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -113,5 +111,24 @@ public class UserDaoImpl implements UserDao {
             System.err.println("deleteUser 실행 중 오류 발생: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean isValidUser(String userId, String password) {
+        String sql = "SELECT user_id, user_password FROM user WHERE user_id = ? AND user_password = ?";
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            ps.setString(2, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("isValidUser 실행 중 오류 발생: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
     }
 }

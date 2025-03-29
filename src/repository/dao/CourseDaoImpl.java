@@ -72,30 +72,5 @@ public class CourseDaoImpl implements CourseDao {
         return courses;
     }
 
-    @Override
-    public void updateCourse(Course course) {
-        String sql = "UPDATE course SET course_name = ?, course_open = ?, course_graduate_date = ? WHERE course_uid = ?";
-        try (Connection con = DbManager.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, course.getCourseName());
-            ps.setInt(2, course.getCourse_open());
-            ps.setString(3, course.getCourseGraduateDate());
-            ps.setInt(4, course.getCourseUid());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void deleteCourse(int courseUid) {
-        String sql = "DELETE FROM course WHERE course_uid = ?";
-        try (Connection con = DbManager.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, courseUid);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    
 }

@@ -1,8 +1,8 @@
 package presentation.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 import business.dto.Course;
 import repository.dao.CourseDao;
@@ -39,12 +39,13 @@ public class CourseSelectView {
                     return -1;
                 }
 
-                boolean valid = courses.stream().anyMatch(course -> course.getCourseUid() == courseUid);
+                boolean valid = courses.stream()
+                                        .anyMatch(course -> course.getCourseUid() == courseUid && course.getCourse_open() == 1);
                 if (valid) {
                     System.out.println("과정 선택이 완료되었습니다.");
                     return courseUid;
                 } else {
-                    System.out.println("잘못된 과정 ID입니다. 다시 입력해주세요.");
+                    System.out.println("잘못된 과정 ID이거나 신청 불가능한 과정입니다. 다시 입력해주세요.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("숫자를 입력해주세요.");
