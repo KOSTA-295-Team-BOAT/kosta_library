@@ -118,6 +118,6 @@ public class Book {
                 ", categoryUid3=" + categoryUid3 +
                 ", bookStoreDate='" + bookStoreDate + '\'' +
                 ", bookStatus=" + bookStatus +
-                '}';
+                '}'+'\n';
     }
 }
