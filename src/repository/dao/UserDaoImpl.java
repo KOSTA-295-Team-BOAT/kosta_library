@@ -17,7 +17,6 @@ public class UserDaoImpl implements UserDao {
         String sql = "INSERT INTO user (user_id, user_password, course_uid, category_uid, user_status, user_score) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = DbManager.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            System.out.println("DB 연결 성공: addUser 메서드 실행 중"); // 디버깅 메시지
             ps.setString(1, user.getUserId());
             ps.setString(2, user.getUserPassword());
             ps.setInt(3, user.getCourseUid());
@@ -36,7 +35,6 @@ public class UserDaoImpl implements UserDao {
         String sql = "SELECT * FROM user WHERE user_id = ?";
         try (Connection con = DbManager.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            System.out.println("DB 연결 성공: getUserById 메서드 실행 중"); // 디버깅 메시지
             ps.setString(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

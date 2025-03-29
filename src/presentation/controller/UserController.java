@@ -5,6 +5,8 @@ import business.service.user.UserRegistration;
 import business.service.user.UserService;
 import presentation.view.LoginView;
 import repository.dao.UserDao;
+import repository.dao.UserDaoImpl;
+import repository.dao.CourseDaoImpl;
 
 /**
  * 기능별 상세 컨트롤러 : 사용자 관련 컨트롤러 클래스
@@ -19,14 +21,14 @@ public class UserController {
     // 기본 생성자 수정: 모든 필드 초기화
     public UserController() {
         this.userService = new UserService(new UserDaoImpl());
-        this.userRegistration = new UserRegistration(new UserDaoImpl());
+        this.userRegistration = new UserRegistration(new UserDaoImpl(), new CourseDaoImpl());
         this.loginView = new LoginView();
     }
 
     // 수정된 생성자: 기존 UserService와 함께 UserRegistration도 초기화
     public UserController(UserService userService) {
         this.userService = userService;
-        this.userRegistration = new UserRegistration(new UserDaoImpl());
+        this.userRegistration = new UserRegistration(new UserDaoImpl(), new CourseDaoImpl());
         this.loginView = new LoginView();
     }
 
@@ -35,7 +37,8 @@ public class UserController {
         this.loginView = loginView;
         this.userDao = userDao;
         this.userService = new UserService(new UserDaoImpl()); 
-        this.userRegistration = new UserRegistration(new UserDaoImpl()); 
+        // 수정: UserRegistration 생성자에 CourseDaoImpl 추가
+        this.userRegistration = new UserRegistration(new UserDaoImpl(), new CourseDaoImpl());
     }
     
     //회원가입 기능을 위한 메서드 추가
