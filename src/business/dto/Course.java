@@ -9,7 +9,7 @@ public class Course {
     // 필드 추가
     private int courseUid;
     private String courseName;
-    private String course_open;
+    private int course_open;
     private String courseGraduateDate;
 
     public int getCourseUid() {
@@ -28,11 +28,11 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public String getCourse_open() {
+    public int getCourse_open() {
         return this.course_open;
     }
 
-    public void setCourse_open(String course_open) {
+    public void setCourse_open(int course_open) {
         this.course_open = course_open;
     }
 
@@ -55,7 +55,7 @@ public class Course {
     public Course() {}
 
     //모든 필드를 포함한 생성자
-    public Course(int courseUid, String courseName, String course_open, String courseGraduateDate) {
+    public Course(int courseUid, String courseName, int course_open, String courseGraduateDate) {
         this.courseUid = courseUid;
         this.courseName = courseName;
         this.course_open = course_open;
