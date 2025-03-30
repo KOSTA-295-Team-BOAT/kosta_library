@@ -1,6 +1,10 @@
 package repository.dao;
 
 import business.dto.BookRent;
+import exception.DmlException;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -21,4 +25,7 @@ public interface BookRentDao {
 
     // 대여 삭제
     void deleteBookRent(String rentUid);
+
+    //커넥션 받아서 추가
+	BookRent addBookRent(Connection con, BookRent bookRent) throws SQLException, DmlException;
 }
