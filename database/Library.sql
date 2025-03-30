@@ -22,6 +22,7 @@ CREATE TABLE `course` ( -- 과정 테이블
 CREATE TABLE `user` ( -- 회원 테이블
 	`user_id`	VARCHAR(25)	NOT NULL,
 	`user_password`	VARCHAR(128)	NOT NULL COMMENT '추후 암호화 고려해 해시값 최대길이 고려한 길이 설정',
+    `user_name` VARCHAR(50) NULL,
 	`course_uid`	INT	NOT NULL,
 	`category_uid`	INT	NULL DEFAULT NULL COMMENT '초기값은 null, 회원가입 시 혹은 마이페이지에서 설정 가능',
 	`user_status`	INT	NOT NULL DEFAULT 0 COMMENT '{0 = 교육생, 1= 수료생}',
@@ -113,14 +114,17 @@ ALTER TABLE `course_recommend` ADD CONSTRAINT `FK_book_TO_course_recommend_1`
 FOREIGN KEY (`book_uid`) REFERENCES `book` (`book_uid`);
 
 select * from user;
+DELETE FROM user;
 select * from course;
+DELETE FROM course;
 
-INSERT INTO user (user_id, user_password, course_uid, category_uid, user_status, user_score) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO user (user_id, user_password, user_name, course_uid, category_uid, user_status, user_score) VALUES (?, ?, ?, ?, ?, ?, ?);
 
-INSERT INTO course (course_uid,course_name, course_open, course_graduate_date)
+INSERT INTO course (course_uid, course_name, course_open, course_graduate_date)
 VALUES 
-(1,'다크소울 만들기', 1, '2025-12-30'),
-(null, '몬스터 헌터 만들기', 1, '2026-02-30'),
+(null, '다크소울 만들기', 1, '2025-12-30'),
+(null, '몬스터 헌터 만들기', 1, '2026-02-23'),
 (null, '닌자 가이덴 만들기', 1, '2027-03-29');
+
 
 

@@ -14,15 +14,16 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void addUser(User user) {
-        String sql = "INSERT INTO user (user_id, user_password, course_uid, category_uid, user_status, user_score) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user (user_id, user_password, user_name, course_uid, category_uid, user_status, user_score) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = DbManager.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, user.getUserId());
             ps.setString(2, user.getUserPassword());
-            ps.setInt(3, user.getCourseUid());
-            ps.setObject(4, user.getCategoryUid() == 0 ? null : user.getCategoryUid());
-            ps.setInt(5, user.getUserStatus());
-            ps.setInt(6, user.getUserScore());
+            ps.setString(3, user.getUserName()); // user_name 추가
+            ps.setInt(4, user.getCourseUid());
+            ps.setObject(5, user.getCategoryUid() == 0 ? null : user.getCategoryUid());
+            ps.setInt(6, user.getUserStatus());
+            ps.setInt(7, user.getUserScore());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("addUser 실행 중 오류 발생: " + e.getMessage());
@@ -44,7 +45,8 @@ public class UserDaoImpl implements UserDao {
                             rs.getInt("course_uid"),
                             rs.getInt("category_uid"),
                             rs.getInt("user_status"),
-                            rs.getInt("user_score")
+                            rs.getInt("user_score"),
+                            rs.getString("user_name") // user_name 추가
                     );
                 }
             }
@@ -70,7 +72,8 @@ public class UserDaoImpl implements UserDao {
                         rs.getInt("course_uid"),
                         rs.getInt("category_uid"),
                         rs.getInt("user_status"),
-                        rs.getInt("user_score")
+                        rs.getInt("user_score"),
+                        rs.getString("user_name") // user_name 추가
                 ));
             }
         } catch (SQLException e) {
@@ -82,33 +85,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        String sql = "UPDATE user SET user_password = ?, course_uid = ?, category_uid = ?, user_status = ?, user_score = ? WHERE user_id = ?";
+        String sql = "UPDATE user SET user_password = ?, user_name = ?, course_uid = ?, category_uid = ?, user_status = ?, user_score = ? WHERE user_id = ?";
         try (Connection con = DbManager.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             System.out.println("DB 연결 성공: updateUser 메서드 실행 중"); // 디버깅 메시지
             ps.setString(1, user.getUserPassword());
-            ps.setInt(2, user.getCourseUid());
-            ps.setObject(3, user.getCategoryUid() == 0 ? null : user.getCategoryUid());
-            ps.setInt(4, user.getUserStatus());
-            ps.setInt(5, user.getUserScore());
-            ps.setString(6, user.getUserId());
+            ps.setString(2, user.getUserName()); // user_name 추가
+            ps.setInt(3, user.getCourseUid());
+            ps.setObject(4, user.getCategoryUid() == 0 ? null : user.getCategoryUid());
+            ps.setInt(5, user.getUserStatus());
+            ps.setInt(6, user.getUserScore());
+            ps.setString(7, user.getUserId());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("updateUser 실행 중 오류 발생: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void deleteUser(String userId) {
-        String sql = "DELETE FROM user WHERE user_id = ?";
-        try (Connection con = DbManager.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            System.out.println("DB 연결 성공: deleteUser 메서드 실행 중"); // 디버깅 메시지
-            ps.setString(1, userId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("deleteUser 실행 중 오류 발생: " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -13,19 +13,23 @@ public class User {
     private int categoryUid; // null 허용
     private int userStatus;
     private int userScore;
+    private String userName; // 추가된 필드
 
     // 기본 생성자
     public User() {}
 
     // 모든 필드를 포함한 생성자
-    public User(String userId, String userPassword, int courseUid, int categoryUid, int userStatus, int userScore) {
+    public User(String userId, String userPassword, int courseUid, int categoryUid, int userStatus, int userScore, String userName) {
         this.userId = userId;
         this.userPassword = userPassword;
         this.courseUid = courseUid;
         this.categoryUid = categoryUid;
         this.userStatus = userStatus;
         this.userScore = userScore;
+        this.userName = userName;
     }
+
+    
 
     // Getter 및 Setter 메서드
     public String getUserId() {
@@ -76,6 +80,14 @@ public class User {
         this.userScore = userScore;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     // toString 메서드 (디버깅용)
     @Override
     public String toString() {
@@ -86,6 +98,7 @@ public class User {
                 ", categoryUid=" + categoryUid +
                 ", userStatus=" + userStatus +
                 ", userScore=" + userScore +
+                ", userName='" + userName + '\'' +
                 '}';
     }
 }
