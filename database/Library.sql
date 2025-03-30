@@ -124,3 +124,13 @@ VALUES
 (null, '닌자 가이덴 만들기', 1, '2027-03-29');
 
 
+---------------------------------------------------------------------------------------------------------------------------------
+
+-- rent_uid 데이터타입 잘못된 것 수정
+
+ALTER TABLE rent_detail DROP FOREIGN KEY FK_book_rent_TO_rent_detail_1; -- pk-fk관계 일시적 제거
+ALTER TABLE book_rent MODIFY rent_uid INT NOT NULL AUTO_INCREMENT; -- book_rent 테이블의 rent_uid를 INT로 변경 + AUTO_INCREMENT
+ALTER TABLE rent_detail MODIFY rent_uid INT NOT NULL; -- rent_detail 테이블의 rent_uid도 INT로 맞춰줌
+ALTER TABLE rent_detail -- pk-fk관계 복원
+ADD CONSTRAINT FK_book_rent_TO_rent_detail_1
+FOREIGN KEY (rent_uid) REFERENCES book_rent(rent_uid);
