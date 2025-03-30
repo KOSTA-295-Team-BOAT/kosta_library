@@ -88,9 +88,8 @@ public class UserDaoImpl implements UserDao {
         String sql = "UPDATE user SET user_password = ?, user_name = ?, course_uid = ?, category_uid = ?, user_status = ?, user_score = ? WHERE user_id = ?";
         try (Connection con = DbManager.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            System.out.println("DB 연결 성공: updateUser 메서드 실행 중"); // 디버깅 메시지
             ps.setString(1, user.getUserPassword());
-            ps.setString(2, user.getUserName()); // user_name 추가
+            ps.setString(2, user.getUserName()); 
             ps.setInt(3, user.getCourseUid());
             ps.setObject(4, user.getCategoryUid() == 0 ? null : user.getCategoryUid());
             ps.setInt(5, user.getUserStatus());

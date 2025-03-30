@@ -3,7 +3,7 @@ CREATE DATABASE library;
 USE library;
 
 CREATE TABLE `book_rent` ( -- 대여 테이블
-	`rent_uid`	VARCHAR(25)	NOT NULL COMMENT 'Auto-Increment',
+	`rent_uid`	int	NOT NULL COMMENT 'Auto-Increment',
 	`user_id`	VARCHAR(25)	NOT NULL,
 	`rent_date`	DATETIME	NOT NULL DEFAULT NOW(),
 	`rent_status`	INT	NOT NULL DEFAULT 0 COMMENT '{0 = 대여 중, 1 = 반납완료, 2 =연체중, 3 = 연체반납}',
@@ -115,8 +115,12 @@ FOREIGN KEY (`book_uid`) REFERENCES `book` (`book_uid`);
 
 select * from user;
 DELETE FROM user;
+
 select * from course;
 DELETE FROM course;
+
+SELECT * FROM `book_category`;
+DELETE FROM book_category;
 
 INSERT INTO user (user_id, user_password, user_name, course_uid, category_uid, user_status, user_score) VALUES (?, ?, ?, ?, ?, ?, ?);
 
@@ -126,5 +130,10 @@ VALUES
 (null, '몬스터 헌터 만들기', 1, '2026-02-23'),
 (null, '닌자 가이덴 만들기', 1, '2027-03-29');
 
+INSERT INTO `book_category` (category_name)
+VALUES
+('JAVA'),
+('C#'),
+('C++');
 
 
