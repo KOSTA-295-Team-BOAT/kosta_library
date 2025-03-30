@@ -19,14 +19,13 @@ import repository.dao.BookReservationDaoImpl;
  * @author 박재현
  * @since 2025-03-29
  */
-public class BookSearch {
+public class BookSearchService {
 
 	BookCategoryDao bookCategoryDao;
 	BookDao bookDao;
 	BookRentDao bookRentDao;
 	BookReservationDao bookReservationDao;
-	
-	public BookSearch(){
+	public BookSearchService(){
 		bookSearchInit();
 	}
 	
