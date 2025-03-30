@@ -1,6 +1,8 @@
 package repository.dao;
 
 import business.dto.RentDetail;
+
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -21,4 +23,6 @@ public interface RentDetailDao {
 
     // 대여 상세 삭제
     void deleteRentDetail(int rentDetailUid);
+
+	void addRentDetail(Connection con, RentDetail rentDetail);
 }
