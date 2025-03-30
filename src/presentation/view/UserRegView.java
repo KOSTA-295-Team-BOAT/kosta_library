@@ -84,8 +84,11 @@ public class UserRegView {
             System.out.print("비밀번호 입력: ");
             String password = sc.nextLine();
 
+            System.out.print("이름 입력: ");
+            String userName = sc.nextLine();
+
             // 간단한 유효성 검사: 빈 문자열 체크
-            if (userId.trim().isEmpty() || password.trim().isEmpty()) {
+            if (userId.trim().isEmpty() || password.trim().isEmpty() || userName.trim().isEmpty()) {
                 System.out.println("입력된 정보가 부족합니다. 다시 입력해주세요.");
                 continue; // 입력이 부족하면 다시 입력받음
             }
@@ -94,6 +97,8 @@ public class UserRegView {
             System.out.println("입력하신 회원정보는 다음과 같습니다:");
             System.out.println("아이디: " + userId);
             System.out.println("비밀번호: " + password);
+            System.out.println("이름: " + userName);
+            System.out.println("선택한 과정 ID: " + courseUid);
             
             while (true) { // 반복 루프 추가
 
@@ -102,7 +107,7 @@ public class UserRegView {
             String confirm = sc.nextLine();
 
                 if ("Y".equalsIgnoreCase(confirm)) {
-                    return new User(userId, password, 1, 0, 0, 5); // 기본값 설정 기능 추가 TODO course 입력받는 기능 추가하고 입력받은 값 사용
+                    return new User(userId, password, courseUid, 0, 0, 5, userName);
                 } else if ("N".equalsIgnoreCase(confirm)) {
                     System.out.println("다시 입력 화면으로 돌아갑니다.");
                     break; // 루프 종료

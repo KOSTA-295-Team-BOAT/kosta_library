@@ -21,13 +21,12 @@ public class UserService {
 
     // 사용자 추가
     public void addUser(User user) {
-        // 비즈니스 로직 추가 가능 (예: 데이터 유효성 검사)
+        // user_name 유효성 검사 추가 가능
         userDao.addUser(user);
     }
 
     // 사용자 ID로 조회
     public User getUserById(String userId) {
-        // 비즈니스 로직 추가 가능 (예: 조회 전 권한 확인)
         return userDao.getUserById(userId);
     }
 
@@ -39,14 +38,8 @@ public class UserService {
 
     // 사용자 업데이트
     public void updateUser(User user) {
-        // 비즈니스 로직 추가 가능 (예: 업데이트 전 데이터 유효성 검사)
+        // user_name 유효성 검사 추가 가능
         userDao.updateUser(user);
-    }
-
-    // 사용자 삭제
-    public void deleteUser(String userId) {
-        // 비즈니스 로직 추가 가능 (예: 삭제 전 확인 작업)
-        userDao.deleteUser(userId);
     }
 
     // 로그인 검증

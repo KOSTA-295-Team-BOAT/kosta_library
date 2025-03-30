@@ -7,7 +7,9 @@ import presentation.view.LoginView;
 import repository.dao.UserDao;
 import repository.dao.UserDaoImpl;
 import repository.dao.CourseDaoImpl;
+import util.SessionManager;
 import java.util.List;
+
 
 /**
  * 기능별 상세 컨트롤러 : 사용자 관련 컨트롤러 클래스
@@ -56,23 +58,40 @@ public class UserController {
     // 사용자 ID로 조회
     public User getUserById(String userId) {
         User user = userService.getUserById(userId);
-        if (user != null) {
-            System.out.println("사용자 정보: " + user);
-        } else {
+        if (user == null) {
             System.out.println("사용자를 찾을 수 없습니다.");
         }
         return user;
     }
 
-    
+    // 현재 사용자 정보를 반환
+    public business.dto.User getCurrentUser() {
+        // SessionManager에서 현재 로그인한 사용자 ID를 가져옴
+        String currentUserId = SessionManager.getCurrentUserId();
+        if (currentUserId != null) {
+            // DB에서 해당 사용자 정보를 조회
+            User user = userService.getUserById(currentUserId);
+            if (user instanceof business.dto.User currentUser) {
+                // 필요한 필드: user_id, user_score, user_name 반환
+                return new business.dto.User(
+                    currentUser.getUserId(),
+                    "",
+                    0,
+                    0,
+                    0,
+                    currentUser.getUserScore(),
+                    currentUser.getUserName()
+                );
+            }
+        }
+        return null;
+    }
 
     // 사용자 업데이트
     public void updateUser(User user) {
         userService.updateUser(user);
         System.out.println("사용자 정보가 성공적으로 업데이트되었습니다.");
     }
-
-    
 
     // 로그인 처리
     public void handleLogin() {
@@ -81,6 +100,8 @@ public class UserController {
         String password = credentials[1];
 
         if (userService.isValidUser(id, password)) {
+            // 로그인 성공 시 세션에 사용자 ID 저장
+            SessionManager.setCurrentUserId(id);
             loginView.printLoginSuccess();
             new presentation.view.MainMenuView().display();
         } else {
