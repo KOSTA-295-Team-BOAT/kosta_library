@@ -6,10 +6,10 @@ package exception;
  */
 
 public class DmlException extends Exception {
-	DmlException(){
+	public DmlException(){
 		
 	}
-	DmlException(String message){
+	public DmlException(String message){
 		super(message);
 	}
 }
