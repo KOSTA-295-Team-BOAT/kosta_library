@@ -16,6 +16,8 @@ import repository.dao.BookReservationDaoImpl;
 
 /**
  * 도서 검색과 관련된 비즈니스 로직
+ * @author 박재현
+ * @since 2025-03-29
  */
 public class BookSearch {
 
@@ -31,7 +33,7 @@ public class BookSearch {
 	void bookSearchInit(){
 		bookCategoryDao = new BookCategoryDaoImpl();
 		bookDao = new BookDaoImpl();
-//		bookRentDao = new BookRentDaoImpl();
+		bookRentDao = new BookRentDaoImpl();
 		bookReservationDao = new BookReservationDaoImpl();
 
 	}

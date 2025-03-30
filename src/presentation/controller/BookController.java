@@ -9,9 +9,10 @@ import business.dto.Book;
 import business.service.book.BookSearch;
 import exception.SearchWrongException;
 
-/**
- * @author 
+/** 
  * 기능별 상세 컨트롤러 : 도서 컨트롤러 클래스
+ * @author 박재현
+ * @since 2025-03-29
  */
 public class BookController {
 	
@@ -61,5 +62,7 @@ public class BookController {
 		return returnBookList;
 	}
 
-
+	
+	
+	
 }
