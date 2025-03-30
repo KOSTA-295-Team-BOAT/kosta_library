@@ -6,7 +6,7 @@ package business.dto;
  *@since 2025.03.27
  */
 public class BookRent {
-    private String rentUid;
+    private int rentUid;
     private String userId;
     private String rentDate;
     private int rentStatus;
@@ -16,7 +16,7 @@ public class BookRent {
     public BookRent() {}
 
     // 모든 필드를 포함한 생성자
-    public BookRent(String rentUid, String userId, String rentDate, int rentStatus, String rentDue) {
+    public BookRent(int rentUid, String userId, String rentDate, int rentStatus, String rentDue) {
         this.rentUid = rentUid;
         this.userId = userId;
         this.rentDate = rentDate;
@@ -25,11 +25,11 @@ public class BookRent {
     }
 
     // Getter 및 Setter 메서드
-    public String getRentUid() {
+    public int getRentUid() {
         return rentUid;
     }
 
-    public void setRentUid(String rentUid) {
+    public void setRentUid(int rentUid) {
         this.rentUid = rentUid;
     }
 
