@@ -2,7 +2,6 @@ package presentation.view;
 
 import java.util.Scanner;
 import business.dto.User;
-import presentation.view.CourseSelectView;
 
 /**
  * 메인뷰에서 회원가입 부분을 출력해주는 클래스
@@ -67,7 +66,6 @@ public class UserRegView {
      * @return 모든 입력이 올바르고 최종 확인이 되면 User 객체, 그렇지 않으면 null
      */
     public User inputUserRegInfo() {
-        CourseSelectView courseSelectView = new CourseSelectView(); // 과정 선택 뷰 객체 생성
         while (true) { // 반복 루프 시작
             System.out.print("회원가입을 취소하고 메인화면으로 돌아가시겠습니까? (Y/N): ");
             String backToMain = sc.nextLine();
@@ -93,12 +91,6 @@ public class UserRegView {
             if (userId.trim().isEmpty() || password.trim().isEmpty() || userName.trim().isEmpty()) {
                 System.out.println("입력된 정보가 부족합니다. 다시 입력해주세요.");
                 continue; // 입력이 부족하면 다시 입력받음
-            }
-
-            int courseUid = courseSelectView.selectCourse(); // 과정 선택 호출
-            if (courseUid == -1) {
-                System.out.println("과정 선택이 취소되었습니다. 다시 회원가입을 진행해주세요.");
-                continue;
             }
 
             // 입력한 정보 출력

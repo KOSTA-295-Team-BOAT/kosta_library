@@ -10,7 +10,7 @@ public class SearchWrongException extends Exception {
 		
 	}
 	
-	SearchWrongException(String message){
+	public SearchWrongException(String message){
 		super(message);
 	}
 	

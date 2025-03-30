@@ -2,6 +2,8 @@ package presentation.view;
 
 import java.util.Scanner;
 
+import presentation.controller.BookController;
+
 public class MainMenuView {
 
 	public void display() {
@@ -15,7 +17,7 @@ public class MainMenuView {
 					new BookRecommendView().display();
 					break;
 				case 2:
-					new BookSerachView().display();
+					new BookSearchView(new BookController()).display();
 					break;
 				case 3:
 					new MypageView().display();
