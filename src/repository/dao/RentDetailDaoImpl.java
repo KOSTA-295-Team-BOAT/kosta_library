@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import business.dto.BookRent;
@@ -45,28 +46,27 @@ public class RentDetailDaoImpl implements RentDetailDao {
 
 
 	@Override
-	public RentDetail getRentDetailById(int rentDetailUid) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RentDetail> getRentDetailByUserId(Connection con, String userId) throws SQLException {
+		List<RentDetail> rentDetailList = new ArrayList<RentDetail>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		RentDetail rentDetail = null;
+
+		try {
+			// connection은 이미 받아왔으므로 새로 만들지 않음
+			String query = "select * from rent_detail where user_id = ? and rent_return_state = 0" ;
+			ps = con.prepareStatement(query);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				rentDetail = new RentDetail(rs.getInt("rent_detail_uid"), rs.getInt("book_uid"), rs.getInt("rent_uid"),
+						rs.getInt("rent_return_state"), rs.getString("rent_return_due"));
+				rentDetailList.add(rentDetail);
+			}
+
+		} finally {
+			DbManager.close(null, ps, null); // ps, rs는 닫지만 con은 닫지않음. rs는 auto-close
+		}
+		return rentDetailList;
 	}
-
-	@Override
-	public List<RentDetail> getAllRentDetails() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateRentDetail(RentDetail rentDetail) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteRentDetail(int rentDetailUid) {
-		// TODO Auto-generated method stub
-
-	}
-
 
 }
