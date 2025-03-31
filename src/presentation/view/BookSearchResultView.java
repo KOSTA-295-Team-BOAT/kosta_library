@@ -20,22 +20,24 @@ public class BookSearchResultView {
 	}
 
 	void display(List<Book> book) {
+		if (book==null)
+			return;
 		System.out.println("도서 검색 결과");
 //		System.out.println(book);
 		boolean isRunning = true;
 		int maxPage = 0;
-		maxPage = (book.size() / DISPLAY_BOOK_PER_PAGE) + 1;
+		maxPage = (book.size() + DISPLAY_BOOK_PER_PAGE - 1) / DISPLAY_BOOK_PER_PAGE;
 		int currentPage = 1;
 		while (isRunning) {
 			String bookName = null;
-			int currentLength = book.size() % DISPLAY_BOOK_PER_PAGE;
 			int bookStartIndex = (currentPage - 1) * DISPLAY_BOOK_PER_PAGE;
+			int currentLength = Math.min(DISPLAY_BOOK_PER_PAGE, book.size() - bookStartIndex);
 			System.out.println("--------------------------------------------------------------------------------");			
 			for (int i = 0; i < currentLength; i++) {
-				if (book.get(i).getBookName().length() > MAX_BOOK_NAME_LENGTH)
-					bookName = book.get(i).getBookName().substring(0, MAX_BOOK_NAME_LENGTH);
+				if (book.get(bookStartIndex+i).getBookName().length() > MAX_BOOK_NAME_LENGTH)
+					bookName = book.get(bookStartIndex+i).getBookName().substring(0, MAX_BOOK_NAME_LENGTH);
 				else
-					bookName = book.get(i).getBookName();
+					bookName = book.get(bookStartIndex+i).getBookName();
 				System.out.println("[" + (i+1) + "]" + " 제목 : " + bookName + " | 저자 : " + book.get(bookStartIndex+i).getBookAuthor()
 						+ " | 출판사 : " + book.get(bookStartIndex+i).getBookPublisher() + " ");
 			}
