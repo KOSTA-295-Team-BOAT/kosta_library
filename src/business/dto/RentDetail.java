@@ -8,7 +8,7 @@ package business.dto;
 public class RentDetail {
     private int rentDetailUid;
     private int bookUid;
-    private String rentUid;
+    private int rentUid;
     private int rentReturnState;
     private String rentReturnDue;
 
@@ -16,7 +16,7 @@ public class RentDetail {
     public RentDetail() {}
 
     // 모든 필드를 포함한 생성자
-    public RentDetail(int rentDetailUid, int bookUid, String rentUid, int rentReturnState, String rentReturnDue) {
+    public RentDetail(int rentDetailUid, int bookUid, int rentUid, int rentReturnState, String rentReturnDue) {
         this.rentDetailUid = rentDetailUid;
         this.bookUid = bookUid;
         this.rentUid = rentUid;
@@ -41,11 +41,11 @@ public class RentDetail {
         this.bookUid = bookUid;
     }
 
-    public String getRentUid() {
+    public int getRentUid() {
         return rentUid;
     }
 
-    public void setRentUid(String rentUid) {
+    public void setRentUid(int rentUid) {
         this.rentUid = rentUid;
     }
 
