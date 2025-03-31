@@ -39,6 +39,7 @@ public class MyUserdataView {
         new Scanner(System.in).nextLine();
 
         // 마이페이지 메인 화면으로 돌아가기
-        new MyPageMainView().display();
+        //new MyPageMainView().display();
+        return;
     }
 }

@@ -1,7 +1,11 @@
 package presentation.view;
 
 import java.util.Scanner;
+import java.util.List;
 import business.dto.User;
+import repository.dao.CourseDao;
+import repository.dao.CourseDaoImpl;
+import business.dto.Course;
 
 /**
  * 메인뷰에서 회원가입 부분을 출력해주는 클래스
@@ -10,6 +14,7 @@ import business.dto.User;
 public class UserRegView {
 
     private Scanner sc = new Scanner(System.in);
+    private final CourseDao courseDao = new CourseDaoImpl(); // CourseDao 추가
 
     /**
      * 회원가입 화면 출력
@@ -78,6 +83,7 @@ public class UserRegView {
                 continue; // 잘못된 입력 시 다시 질문
             }
 
+
             System.out.print("아이디 입력: ");
             String userId = sc.nextLine();
 
@@ -87,8 +93,25 @@ public class UserRegView {
             System.out.print("이름 입력: ");
             String userName = sc.nextLine();
 
+            // DB에서 과정 목록 불러오기 및 출력
+            System.out.println("=== 선택 가능한 과정 목록 ===");
+            java.util.List<Course> courses = courseDao.getAllCourses();
+            if (courses.isEmpty()) {
+                System.out.println("등록된 과정이 없습니다. 관리자에게 문의하세요.");
+                return null;
+            }
+            for (Course course : courses) {
+                System.out.println("[ID: " + course.getCourseUid() + "] " +
+                                   "과정명: " + course.getCourseName() + " / " +
+                                   "신청 가능 여부: " + (course.getCourse_open() == 1 ? "가능" : "불가능"));
+            }
+            System.out.println("=============================");
+
+            System.out.print("선택한 과정 ID 입력: ");
+            String courseUid = sc.nextLine(); // courseUid 입력 추가
+
             // 간단한 유효성 검사: 빈 문자열 체크
-            if (userId.trim().isEmpty() || password.trim().isEmpty() || userName.trim().isEmpty()) {
+            if (userId.trim().isEmpty() || password.trim().isEmpty() || userName.trim().isEmpty() || courseUid.trim().isEmpty()) {
                 System.out.println("입력된 정보가 부족합니다. 다시 입력해주세요.");
                 continue; // 입력이 부족하면 다시 입력받음
             }
@@ -107,7 +130,7 @@ public class UserRegView {
             String confirm = sc.nextLine();
 
                 if ("Y".equalsIgnoreCase(confirm)) {
-                    return new User(userId, password, courseUid, 0, 0, 5, userName);
+                    return new User(userId, password, Integer.parseInt(courseUid), 0, 5, userName, null);
                 } else if ("N".equalsIgnoreCase(confirm)) {
                     System.out.println("다시 입력 화면으로 돌아갑니다.");
                     break; // 루프 종료
