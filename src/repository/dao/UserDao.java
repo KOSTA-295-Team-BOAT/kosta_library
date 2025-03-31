@@ -24,4 +24,13 @@ public interface UserDao {
 
     // 로그인 검증 메서드
     boolean isValidUser(String userId, String password);
+
+    // 회원 즐겨찾기 카테고리 추가
+    void addUserFavoriteCategory(String userId, int categoryUid);
+
+    // 회원 즐겨찾기 카테고리 삭제
+    void deleteUserFavoriteCategory(String userId, int categoryUid);
+
+    // 회원 즐겨찾기 카테고리 조회
+    List<Integer> getUserFavoriteCategories(String userId);
 }

@@ -57,4 +57,5 @@ public class BookCategoryDaoImpl implements BookCategoryDao {
 	@Override
 	public void deleteCategory(int categoryId) {
 		// TODO Auto-generated method stub
+	}
 }

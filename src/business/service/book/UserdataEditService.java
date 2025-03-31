@@ -1,12 +1,12 @@
 package business.service.book;
 
-import util.SessionManager;
+import business.dto.User;
 import repository.dao.UserDao;
 import repository.dao.UserDaoImpl;
-import business.dto.User;
+import util.SessionManager;
 
 public class UserdataEditService {
-    private final UserDao userDao = new UserDaoImpl(); // UserDao 추가
+    private final UserDao userDao = new UserDaoImpl(); // 수정된 UserDaoImpl 경로
 
     public void updateUserName(String newName) {
         String currentUserId = SessionManager.getCurrentUserId(); // 현재 사용자 ID 가져오기
@@ -29,5 +29,19 @@ public class UserdataEditService {
     public void updateUser(User user) {
         userDao.updateUser(user); // 데이터베이스에 사용자 정보 업데이트
         System.out.println("사용자 정보가 업데이트되었습니다.");
+    }
+
+    public void addUserFavoriteCategory(String userId, int categoryUid) {
+        if (userDao.getUserById(userId) != null) {
+            userDao.addUserFavoriteCategory(userId, categoryUid);
+            System.out.println("관심 카테고리 ID " + categoryUid + "가 추가되었습니다.");
+        } else {
+            System.out.println("사용자를 찾을 수 없습니다.");
+        }
+    }
+
+    public void deleteUserFavoriteCategory(String userId, int categoryUid) {
+        userDao.deleteUserFavoriteCategory(userId, categoryUid);
+        System.out.println("관심 카테고리 ID " + categoryUid + "가 삭제되었습니다.");
     }
 }

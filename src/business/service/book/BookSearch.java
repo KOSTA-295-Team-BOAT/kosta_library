@@ -6,13 +6,13 @@ import java.util.List;
 import business.dto.Book;
 import exception.SearchWrongException;
 import repository.dao.BookCategoryDao;
-import repository.dao.BookCategoryDaoImpl;
+import repository.dao.BookCategoryDaoImpl; 
 import repository.dao.BookDao;
-import repository.dao.BookDaoImpl;
+import repository.dao.BookDaoImpl; 
 import repository.dao.BookRentDao;
 import repository.dao.BookRentDaoImpl;
 import repository.dao.BookReservationDao;
-import repository.dao.BookReservationDaoImpl;
+import repository.dao.BookReservationDaoImpl; 
 
 /**
  * 도서 검색과 관련된 비즈니스 로직
@@ -78,8 +78,19 @@ public class BookSearch {
 		return returnBookList;
 		
 	}
-
 	
-	
-	
+	// 신규 추가: 관심분야 코드에 따라 도서를 검색하며, 없는 경우 예외 발생
+	public List<Book> searchBookByInterest(String interestCode) throws SearchWrongException {
+		// 가정: bookCategoryDao.getCategoryByCode()가 null을 리턴하면 존재하지 않는 관심분야임
+		if(bookCategoryDao.getCategoryByCode(interestCode) == null) {
+			throw new SearchWrongException("없는 관심분야 입니다.");
+		}
+		try {
+			List<Book> returnBookList = bookDao.getBookByCategoryCode(interestCode); // 가정: 해당 메서드 존재
+			return returnBookList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SearchWrongException(e.getMessage());
+		}
+	}
 }

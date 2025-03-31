@@ -1,5 +1,7 @@
 package business.dto;
 
+import java.util.List;
+
 /**
  *회원 정보와 관련된 DTO 클래스 
  *@author 황태윤
@@ -10,26 +12,25 @@ public class User {
     private String userId;
     private String userPassword;
     private int courseUid;
-    private int categoryUid; // null 허용
     private int userStatus;
     private int userScore;
-    private String userName; // 추가된 필드
+    private String userName;
+    private List<Integer> favoriteCategories; 
+    private int categoryUid; // 관심 카테고리 ID 추가
 
     // 기본 생성자
     public User() {}
 
     // 모든 필드를 포함한 생성자
-    public User(String userId, String userPassword, int courseUid, int categoryUid, int userStatus, int userScore, String userName) {
+    public User(String userId, String userPassword, int courseUid, int userStatus, int userScore, String userName, List<Integer> favoriteCategories) {
         this.userId = userId;
         this.userPassword = userPassword;
         this.courseUid = courseUid;
-        this.categoryUid = categoryUid;
         this.userStatus = userStatus;
         this.userScore = userScore;
         this.userName = userName;
+        this.favoriteCategories = favoriteCategories;
     }
-
-    
 
     // Getter 및 Setter 메서드
     public String getUserId() {
@@ -56,14 +57,6 @@ public class User {
         this.courseUid = courseUid;
     }
 
-    public int getCategoryUid() {
-        return categoryUid;
-    }
-
-    public void setCategoryUid(int categoryUid) {
-        this.categoryUid = categoryUid;
-    }
-
     public int getUserStatus() {
         return userStatus;
     }
@@ -88,6 +81,28 @@ public class User {
         this.userName = userName;
     }
 
+    public List<Integer> getFavoriteCategories() {
+        return favoriteCategories;
+    }
+
+    public void setFavoriteCategories(List<Integer> favoriteCategories) {
+        this.favoriteCategories = favoriteCategories;
+    }
+
+    public int getCategoryUid() {
+        return categoryUid;
+    }
+
+    public void setCategoryUid(int categoryUid) {
+        this.categoryUid = categoryUid;
+    }
+
+    public void addFavoriteCategory(int categoryUid) {
+        if (!favoriteCategories.contains(categoryUid)) {
+            favoriteCategories.add(categoryUid);
+        }
+    }
+
     // toString 메서드 (디버깅용)
     @Override
     public String toString() {
@@ -95,10 +110,11 @@ public class User {
                 "userId='" + userId + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", courseUid=" + courseUid +
-                ", categoryUid=" + categoryUid +
                 ", userStatus=" + userStatus +
                 ", userScore=" + userScore +
                 ", userName='" + userName + '\'' +
+                ", favoriteCategories=" + favoriteCategories +
+                ", categoryUid=" + categoryUid +
                 '}';
     }
 }
