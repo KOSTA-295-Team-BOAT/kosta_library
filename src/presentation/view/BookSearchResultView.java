@@ -10,7 +10,7 @@ import util.SessionManager;
 
 public class BookSearchResultView {
 	final int DISPLAY_BOOK_PER_PAGE = 5;
-	final int MAX_BOOK_NAME_LENGTH = 15;
+	final int MAX_BOOK_NAME_LENGTH = 45;
 	Scanner scanner = new Scanner(System.in);
 	BookController controller;
 
@@ -23,38 +23,38 @@ public class BookSearchResultView {
 		System.out.println("도서 검색 결과");
 //		System.out.println(book);
 		boolean isRunning = true;
-		int page = 0;
-		page = (book.size() / DISPLAY_BOOK_PER_PAGE) + 1;
+		int maxPage = 0;
+		maxPage = (book.size() / DISPLAY_BOOK_PER_PAGE) + 1;
 		int currentPage = 1;
 		while (isRunning) {
 			String bookName = null;
-			// System.out.println(book);
-			System.out.println("-----------------------------------------------------------------------------");
 			int currentLength = book.size() % DISPLAY_BOOK_PER_PAGE;
+			int bookStartIndex = (currentPage - 1) * DISPLAY_BOOK_PER_PAGE;
+			System.out.println("--------------------------------------------------------------------------------");			
 			for (int i = 0; i < currentLength; i++) {
 				if (book.get(i).getBookName().length() > MAX_BOOK_NAME_LENGTH)
 					bookName = book.get(i).getBookName().substring(0, MAX_BOOK_NAME_LENGTH);
 				else
 					bookName = book.get(i).getBookName();
-				System.out.println("[" + i + "]" + " 제목 : " + bookName + " | 저자 : " + book.get(i).getBookAuthor()
-						+ " | 출판사 : " + book.get(i).getBookPublisher() + " ");
-//				System.out.println(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + i)));
+				System.out.println("[" + (i+1) + "]" + " 제목 : " + bookName + " | 저자 : " + book.get(bookStartIndex+i).getBookAuthor()
+						+ " | 출판사 : " + book.get(bookStartIndex+i).getBookPublisher() + " ");
 			}
 
-			System.out.println(currentPage + "/" + page);
-			System.out.println("p : 이전 페이지 | n : 다음 페이지 | c : 북카트에 담기 | 번호 : 도서 대여 | b : 돌아가기");
+			System.out.println(currentPage + "/" + maxPage);
+			System.out.println("p : 이전 페이지 | n : 다음 페이지 | c : 북카트에 담기 | 1-" + currentLength  + " : 도서 대여 | b : 돌아가기");
 			String str = scanner.nextLine();
 			try {
 				switch (str) {
-				case "p" -> System.out.println("이전페이지기능(구현예정)");
-				case "n" -> System.out.println("다음페이지기능(구현예정)");
+				case "p" -> currentPage=prevPage(currentPage);
+				case "n" -> currentPage=nextPage(currentPage,maxPage);
 				case "c" -> System.out.println("북카트에 담기 기능(구현예정)");
-				case "1" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 0)));
-				case "2" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 1)));
-				case "3" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 2)));
-				case "4" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 3)));
-				case "5" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 4)));
-				case "b" -> System.out.println("돌아가기");
+				case "1" -> book.set(bookStartIndex + 0, callRent(book.get((bookStartIndex + 0))));
+				case "2" -> book.set(bookStartIndex + 1, callRent(book.get((bookStartIndex + 1))));
+				case "3" -> book.set(bookStartIndex + 2, callRent(book.get((bookStartIndex + 2))));
+				case "4" -> book.set(bookStartIndex + 3, callRent(book.get((bookStartIndex + 3))));
+				case "5" -> book.set(bookStartIndex + 4, callRent(book.get((bookStartIndex + 4))));
+				case "b" -> isRunning=false;
+				default -> System.out.println("잘못된 입력입니다.");
 				}
 			} catch (Exception e) {
 				System.out.println("잘못된 입력입니다.");
@@ -70,17 +70,30 @@ public class BookSearchResultView {
 
 	}
 
+	int prevPage(int currentPage) {
+		if (currentPage==1) return currentPage;
+		else return currentPage-1;
+		
+	}
+	int nextPage(int currentPage, int maxPage) {
+		if (currentPage == maxPage)	return currentPage;
+		else return currentPage+1;
+		
+	}
+	
 	void printBookListPage(int currentPage, List<Book> book) {
 		for (int i = 0; i < DISPLAY_BOOK_PER_PAGE; i++)
 			System.out.println(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + i)));
 	}
 
-	void callRent(Book book) {
+	Book callRent(Book book) {
 		try {
 			controller.rentOneBook(makeIdOnlyDto(SessionManager.getCurrentUserId()), book);
+			book.setBookStatus(1);
 		} catch (Exception e) {
 			System.out.println("잘못된 입력입니다.");
 		}
+		return book;
 	}
 
 }

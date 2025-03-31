@@ -106,6 +106,8 @@ public class BookRentService {
 	public BookRent rentOneBook(User user, Book book) throws Exception {
 		BookRent rent;
 		
+		
+		
 		if(book.getBookStatus()==1)
 			throw new DmlException("대여중인 도서입니다...");
 		

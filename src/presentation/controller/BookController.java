@@ -8,6 +8,7 @@ import business.dto.BookRent;
 import business.dto.User;
 import business.service.book.BookRentService;
 import business.service.book.BookSearchService;
+import exception.DmlException;
 import exception.SearchWrongException;
 
 /**
@@ -72,10 +73,12 @@ public class BookController {
 		BookRent rent = null;
 		try {
 			rent = service.rentOneBook(user, book);
-		} catch (Exception e) {
-			System.out.println("도서 1권 대여중 예외발생");
+			System.out.println(book.getBookName() + "도서 대여에 성공했습니다."); // 나중에 출력용 뷰로 넘겨서 찍도록 리팩토링
+		} catch (DmlException e) {
 			System.out.println(e.getMessage());
 			// TODO 뷰 연결
+		} catch (Exception ae){
+			System.out.println("대여 중 예외 발생");
 		}
 		return rent;
 	}

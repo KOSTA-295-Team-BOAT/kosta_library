@@ -33,6 +33,7 @@ public class BookSearchView {
 			System.out.print(">");
 			String inputString = null;
 			inputString = sc.nextLine();
+			sc.nextLine();
 			switch (inputString) {
 			case "1" -> {result.display(inputName());}
 			case "2" -> {result.display(inputAuthor()); }
@@ -53,6 +54,7 @@ public class BookSearchView {
 	List<Book> inputAuthor() {
 		System.out.println("저자 입력"); System.out.print(">");
 		String input = sc.nextLine();
+		sc.nextLine();
 		return controller.getBookByBookAuthor(input);
 	}
 
