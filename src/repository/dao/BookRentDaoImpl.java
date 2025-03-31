@@ -23,7 +23,7 @@ public class BookRentDaoImpl implements BookRentDao {
 		try {
 			// connection은 이미 받아왔으므로 새로 만들지 않음
 
-			String query = "insert into book_rent (user_id, rent_date, rent_status, rent_due),value(?,?,?,?)";
+			String query = "insert into book_rent (user_id, rent_date, rent_status, rent_due) values(?,?,?,?)";
 			ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			// RETURN_GENERATED_KEYS : 최근 실행된 쿼리의 auto-increment 값을 받아옴
 
@@ -38,7 +38,7 @@ public class BookRentDaoImpl implements BookRentDao {
 			}
 			try (ResultSet rs = ps.getGeneratedKeys()) {
 				if (rs.next())
-					bookRent.setRentUid(rs.getInt("rent_uid"));
+					bookRent.setRentUid(rs.getInt(1));
 			}
 
 		} finally {
