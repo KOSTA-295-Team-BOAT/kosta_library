@@ -1,7 +1,9 @@
 package presentation.view;
 
 import java.util.Scanner;
+
 import business.dto.User;
+import presentation.view.CourseSelectView;
 
 /**
  * 메인뷰에서 회원가입 부분을 출력해주는 클래스
@@ -10,6 +12,7 @@ import business.dto.User;
 public class UserRegView {
 
     private Scanner sc = new Scanner(System.in);
+    private CourseSelectView courseSelectView = new CourseSelectView();
 
     /**
      * 회원가입 화면 출력
@@ -86,6 +89,14 @@ public class UserRegView {
 
             System.out.print("이름 입력: ");
             String userName = sc.nextLine();
+
+            // 과정 선택 추가
+            System.out.println("\n과정을 선택해주세요.");
+            int courseUid = courseSelectView.selectCourse();
+            if (courseUid == -1) {
+                System.out.println("회원가입이 취소되었습니다.");
+                return null;
+            }
 
             // 간단한 유효성 검사: 빈 문자열 체크
             if (userId.trim().isEmpty() || password.trim().isEmpty() || userName.trim().isEmpty()) {
