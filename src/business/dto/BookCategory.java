@@ -40,7 +40,4 @@ public class BookCategory {
         this.categoryUid = categoryUid;
         this.categoryName = categoryName;
     }
-
-
-
 }

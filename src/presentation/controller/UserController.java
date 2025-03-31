@@ -4,11 +4,10 @@ import business.dto.User;
 import business.service.user.UserRegistration;
 import business.service.user.UserService;
 import presentation.view.LoginView;
+import repository.dao.CourseDaoImpl;
 import repository.dao.UserDao;
 import repository.dao.UserDaoImpl;
-import repository.dao.CourseDaoImpl;
 import util.SessionManager;
-import java.util.List;
 
 
 /**
@@ -23,7 +22,7 @@ public class UserController {
 
     // 기본 생성자 수정: 모든 필드 초기화
     public UserController() {
-        this.userService = new UserService(new UserDaoImpl());
+        this.userService = new UserService(new UserDaoImpl()); // 수정된 UserDaoImpl 경로
         this.userRegistration = new UserRegistration(new UserDaoImpl(), new CourseDaoImpl());
         this.loginView = new LoginView();
     }
@@ -39,7 +38,7 @@ public class UserController {
     public UserController(LoginView loginView, UserDao userDao) {
         this.loginView = loginView;
         this.userDao = userDao;
-        this.userService = new UserService(new UserDaoImpl()); 
+        this.userService = new UserService(new UserDaoImpl()); // 수정된 UserDaoImpl 경로
         // 수정: UserRegistration 생성자에 CourseDaoImpl 추가
         this.userRegistration = new UserRegistration(new UserDaoImpl(), new CourseDaoImpl());
     }
@@ -78,9 +77,9 @@ public class UserController {
                     "",
                     0,
                     0,
-                    0,
                     currentUser.getUserScore(),
-                    currentUser.getUserName()
+                    currentUser.getUserName(),
+                    currentUser.getFavoriteCategories() // favoriteCategories 추가
                 );
             }
         }

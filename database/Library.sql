@@ -131,7 +131,6 @@ ALTER TABLE `user_favorite`
 ADD CONSTRAINT `FK_user_favorite_category`
 FOREIGN KEY (`category_uid`) REFERENCES `book_category`(`category_uid`);
 
-
 select * from user;
 DELETE FROM `user`;
 select * from course;
