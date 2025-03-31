@@ -185,4 +185,24 @@ public class BookRentService {
 		
 	}
 	
+	public RentDetail returnOneBook(int rentDetailUid){
+		RentDetail rentDetail=null;
+		//트랜잭션시작
+		//rentDetailUid로 rent_detail테이블 select
+		//반납날짜 기록
+		//rentDetail의 rent_due_date랑 오늘날짜비교
+		//연체아니면 정상반납
+		//독서포인트 증가
+		//연체면 연체반납
+		//독서포인트 감소
+		//rent_id and rent_status = 0 값으로 rent_detail 테이블 select 쿼리
+		//if 결과값이없으면 book_rent테이블의 rent_id 대여상태 rent_status로	
+		//트랜잭션끝
+		
+				
+		return rentDetail;
+		
+	}
+	
+	
 }
