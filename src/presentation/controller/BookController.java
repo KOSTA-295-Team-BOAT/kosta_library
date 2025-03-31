@@ -31,7 +31,7 @@ public class BookController {
 		} catch (SearchWrongException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
-			System.out.println("제목으로 검색중 예외발생");
+//			System.out.println("제목으로 검색중 예외발생");
 			System.out.println(e.getMessage());
 			// TODO 뷰 연결
 		}
@@ -46,7 +46,7 @@ public class BookController {
 		} catch (SearchWrongException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
-			System.out.println("저자 검색중 예외발생");
+//			System.out.println("저자 검색중 예외발생");
 			System.out.println(e.getMessage());
 			// TODO 뷰 연결
 		}
@@ -61,7 +61,7 @@ public class BookController {
 		} catch (SearchWrongException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
-			System.out.println("출판사 검색중 예외발생");
+//			System.out.println("출판사 검색중 예외발생");
 			System.out.println(e.getMessage());
 			// TODO 뷰 연결
 		}
