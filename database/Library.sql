@@ -178,3 +178,4 @@ VALUES
 ('Haskell'),
 ('Elixir'),
 ('Clojure');
+
