@@ -39,15 +39,16 @@ public class BookSearchService {
 	
 	public List<Book> searchBookByName(String name) throws SearchWrongException {
 		
-		List<Book> returnBookList;
- 		
+		List<Book> returnBookList; 		
 		try {
 			returnBookList = bookDao.getBookByBookName(name);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SearchWrongException(e.getMessage());
 		}
-		return returnBookList;
+		if (returnBookList.isEmpty())
+			throw new SearchWrongException("검색 결과가 없습니다.");
+		else return returnBookList;
 		
 	}
 
@@ -61,7 +62,9 @@ public class BookSearchService {
 			e.printStackTrace();
 			throw new SearchWrongException(e.getMessage());
 		}
-		return returnBookList;
+		if (returnBookList.isEmpty())
+			throw new SearchWrongException("검색 결과가 없습니다.");
+		else return returnBookList;
 		
 	}
 	public List<Book> searchBookByPublisher(String name) throws SearchWrongException {
@@ -74,7 +77,9 @@ public class BookSearchService {
 			e.printStackTrace();
 			throw new SearchWrongException(e.getMessage());
 		}
-		return returnBookList;
+		if (returnBookList.isEmpty())
+			throw new SearchWrongException("검색 결과가 없습니다.");
+		else return returnBookList;
 		
 	}
 
