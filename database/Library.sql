@@ -10,14 +10,18 @@ CREATE TABLE `book_rent` (
 	`rent_due`	DATETIME	NULL	COMMENT '대여일로부터 {n}일 후 (비즈니스 로직에서 결정)'
 );
 
-CREATE TABLE `book_reservation` (
-	`reservation_uid`	INT	NOT NULL	COMMENT 'Auto-Increment',
-	`book_uid`	INT	NOT NULL,
-	`reservation_status`	INT	NOT NULL	DEFAULT 0	COMMENT '{0 = 예약 중, 1 = 기간 만료, 2 = 정상 대여, 3 = 예약 취소}}',
-	`reservation_date`	DATETIME	NOT NULL	DEFAULT NOW(),
-	`reservation_due`	DATETIME	NOT NULL	COMMENT '예약일로부터 {n}일 후 (비즈니스 로직에서 결정)',
-	`user_id`	VARCHAR(25)	NOT NULL
+DROP TABLE IF EXISTS book_reservation;
+
+CREATE TABLE book_reservation (
+  reservation_uid INT NOT NULL AUTO_INCREMENT,
+  book_uid INT NOT NULL,
+  reservation_status INT NOT NULL DEFAULT 0,
+  reservation_date DATETIME NOT NULL DEFAULT NOW(),
+  reservation_due DATETIME NOT NULL,
+  user_id VARCHAR(25) NOT NULL,
+  PRIMARY KEY (reservation_uid)
 );
+
 
 
 CREATE TABLE `course` (
@@ -41,18 +45,21 @@ CREATE TABLE `book_category` (
   PRIMARY KEY (category_uid)
 );
 
+DROP TABLE IF EXISTS book;
 
-CREATE TABLE `book` (
-	`book_uid`	INT	NOT NULL	COMMENT 'Auto-Increment',
-	`book_name`	VARCHAR(50)	NOT NULL,
-	`book_author`	VARCHAR(50)	NOT NULL,
-	`book_publisher`	VARCHAR(50)	NOT NULL,
-	`category_uid`	INT	NOT NULL,
-	`category_uid2`	INT	NULL,
-	`category_uid3`	INT	NULL,
-	`book_store_date`	DATETIME	NOT NULL,
-	`book_status`	INT	NOT NULL	DEFAULT 0	COMMENT '{0 = 대여 가능, 1 = 대여 중}'
+CREATE TABLE book (
+  book_uid INT NOT NULL AUTO_INCREMENT,
+  book_name VARCHAR(50) NOT NULL,
+  book_author VARCHAR(50) NOT NULL,
+  book_publisher VARCHAR(50) NOT NULL,
+  category_uid INT NOT NULL,
+  category_uid2 INT NULL,
+  category_uid3 INT NULL,
+  book_store_date DATETIME NOT NULL,
+  book_status INT NOT NULL DEFAULT 0 COMMENT '{0 = 대여 가능, 1 = 대여 중, 2 = 예약중}',
+  PRIMARY KEY (book_uid)
 );
+
 
 CREATE TABLE `rent_detail` (
 	`rent_detail_uid`	INT	NOT NULL	COMMENT 'Auto-Increment',
@@ -124,7 +131,6 @@ ALTER TABLE `user_favorite`
 ADD CONSTRAINT `FK_user_favorite_category`
 FOREIGN KEY (`category_uid`) REFERENCES `book_category`(`category_uid`);
 
-
 select * from user;
 DELETE FROM `user`;
 select * from course;
@@ -165,4 +171,3 @@ VALUES
 ('Haskell'),
 ('Elixir'),
 ('Clojure');
-
