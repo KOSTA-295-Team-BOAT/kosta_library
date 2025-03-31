@@ -37,4 +37,6 @@ public interface BookDao {
 	//도서 대여 상태 변경
 	void updateBookStatus(Connection con, Book book, int bookStatus) throws SQLException;
 
+    // 관심분야 기반 인기 도서 조회
+    List<Book> getMostRentedBooksByUserInterest(String userId);
 }

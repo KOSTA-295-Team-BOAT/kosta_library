@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import business.dto.Book;
 import repository.util.DbManager;
 
@@ -171,6 +171,41 @@ public class BookDaoImpl implements BookDao {
 	public void updateBook(Book book) throws SQLException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<Book> getMostRentedBooksByUserInterest(String userId) {
+		List<Book> books = new ArrayList<>();
+		String sql = 
+			"SELECT b.*, COUNT(*) AS rent_count " +
+			"FROM book b " +
+			"JOIN user_favorite uf ON b.category_uid = uf.category_uid " +
+			"JOIN rent_detail rd ON b.book_uid = rd.book_uid " +
+			"JOIN book_rent br ON rd.rent_uid = br.rent_uid " +
+			"WHERE uf.user_id = ? " +
+			"AND br.rent_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH) " +
+			"GROUP BY b.book_uid " +
+			"ORDER BY rent_count DESC";
+
+		try (Connection conn = DbManager.getConnection();
+			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, userId);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Book book = new Book();
+				book.setBookUid(rs.getInt("book_uid"));
+				book.setBookName(rs.getString("book_name"));
+				book.setBookAuthor(rs.getString("book_author"));
+				book.setBookPublisher(rs.getString("book_publisher"));
+				book.setBookStatus(rs.getInt("book_status"));
+				books.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return books;
 	}
 
 }
