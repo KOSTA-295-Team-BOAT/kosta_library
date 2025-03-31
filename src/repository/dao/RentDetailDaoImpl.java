@@ -44,7 +44,6 @@ public class RentDetailDaoImpl implements RentDetailDao {
 		return rentDetail;
 	}
 
-
 	@Override
 	public List<RentDetail> getRentDetailByUserId(Connection con, String userId) throws SQLException {
 		List<RentDetail> rentDetailList = new ArrayList<RentDetail>();
@@ -54,8 +53,9 @@ public class RentDetailDaoImpl implements RentDetailDao {
 
 		try {
 			// connection은 이미 받아왔으므로 새로 만들지 않음
-			String query = "select * from rent_detail where user_id = ? and rent_return_state = 0" ;
+			String query = "SELECT rd.* FROM rent_detail rd JOIN book_rent br ON rd.rent_uid = br.rent_uid WHERE br.user_id = ?  AND rd.rent_return_state = 0";
 			ps = con.prepareStatement(query);
+			ps.setString(1, userId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				rentDetail = new RentDetail(rs.getInt("rent_detail_uid"), rs.getInt("book_uid"), rs.getInt("rent_uid"),
