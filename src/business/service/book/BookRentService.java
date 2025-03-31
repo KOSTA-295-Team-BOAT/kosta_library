@@ -12,6 +12,7 @@ import business.dto.RentDetail;
 import business.dto.User;
 import business.dto.BookRent;
 import exception.DmlException;
+import exception.SearchWrongException;
 import repository.dao.BookDao;
 import repository.dao.BookDaoImpl;
 import repository.dao.BookRentDao;
@@ -167,4 +168,21 @@ public class BookRentService {
 			return false;
 		}
 	}
+	
+	public List<RentDetail> getRentDetailByUserId(String userId) throws SearchWrongException {
+		Connection con = null;
+		List<RentDetail> rentDetailList = new ArrayList<RentDetail>();
+		try {
+			con = DbManager.getConnection();
+			rentDetailList = detailDao.getRentDetailByUserId(con, userId);
+			if(rentDetailList.isEmpty())
+				throw new SearchWrongException("현재 대여중인 도서가 없습니다.");
+			else return rentDetailList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SearchWrongException("오류가 발생했습니다."); 
+		}
+		
+	}
+	
 }
