@@ -2,8 +2,9 @@ DROP DATABASE IF EXISTS library;
 CREATE DATABASE library;
 USE library;
 
+drop table if exists book_rent;
 CREATE TABLE `book_rent` ( -- 대여 테이블
-	`rent_uid`	int	NOT NULL COMMENT 'Auto-Increment',
+	`rent_uid`	int	NOT NULL AUTO_INCREMENT COMMENT 'Auto-Increment',
 	`user_id`	VARCHAR(25)	NOT NULL,
 	`rent_date`	DATETIME	NOT NULL DEFAULT NOW(),
 	`rent_status`	INT	NOT NULL DEFAULT 0 COMMENT '{0 = 대여 중, 1 = 반납완료, 2 =연체중, 3 = 연체반납}',
@@ -11,6 +12,7 @@ CREATE TABLE `book_rent` ( -- 대여 테이블
 	PRIMARY KEY (`rent_uid`)
 );
 
+drop table if exists course;
 CREATE TABLE `course` ( -- 과정 테이블
 	`course_uid`	INT NOT NULL AUTO_INCREMENT COMMENT 'Auto-Increment',
 	`course_name`	VARCHAR(25)	NOT NULL,
@@ -19,6 +21,7 @@ CREATE TABLE `course` ( -- 과정 테이블
 	PRIMARY KEY (`course_uid`)
 );
 
+drop table if exists user;
 CREATE TABLE `user` ( -- 회원 테이블
 	`user_id`	VARCHAR(25)	NOT NULL,
 	`user_password`	VARCHAR(128)	NOT NULL COMMENT '추후 암호화 고려해 해시값 최대길이 고려한 길이 설정',
@@ -30,6 +33,7 @@ CREATE TABLE `user` ( -- 회원 테이블
 	PRIMARY KEY (`user_id`)
 );
 
+drop table if exists rent_detail;
 CREATE TABLE `rent_detail` ( -- 대여 상세 테이블
 	`rent_detail_uid`	INT NOT NULL AUTO_INCREMENT COMMENT 'Auto-Increment',
 	`book_uid`	INT	NOT NULL,
@@ -39,6 +43,7 @@ CREATE TABLE `rent_detail` ( -- 대여 상세 테이블
 	PRIMARY KEY (`rent_detail_uid`)
 );
 
+drop table if exists book_reservation;
 CREATE TABLE `book_reservation` ( -- 예약 테이블
 	`reservation_uid`	INT NOT NULL AUTO_INCREMENT COMMENT 'Auto-Increment',
 	`book_uid`	INT	NOT NULL,
@@ -49,15 +54,17 @@ CREATE TABLE `book_reservation` ( -- 예약 테이블
 	PRIMARY KEY (`reservation_uid`)
 );
 
+drop table if exists book_category;
 CREATE TABLE `book_category` ( -- 도서 카테고리 테이블
 	`category_uid`	INT NOT NULL AUTO_INCREMENT COMMENT 'Auto-Increment',
 	`category_name`	VARCHAR(25)	NOT NULL,
 	PRIMARY KEY (`category_uid`)
 );
 
+drop table if exists book;
 CREATE TABLE `book` ( -- 도서 테이블
 	`book_uid`	INT NOT NULL AUTO_INCREMENT COMMENT 'Auto-Increment',
-	`book_name`	VARCHAR(50)	NOT NULL,
+	`book_name`	VARCHAR(255) NOT NULL,
 	`book_author`	VARCHAR(50)	NOT NULL,
 	`book_publisher`	VARCHAR(50)	NOT NULL,
 	`category_uid`	INT	NOT NULL,
@@ -68,6 +75,7 @@ CREATE TABLE `book` ( -- 도서 테이블
 	PRIMARY KEY (`book_uid`)
 );
 
+drop table if exists course_recommend;
 CREATE TABLE `course_recommend` ( -- 과정별 추천도서 테이블
 	`course_recommend_uid`	INT NOT NULL AUTO_INCREMENT COMMENT 'Auto-Increment',
 	`course_uid`	INT	NOT NULL,

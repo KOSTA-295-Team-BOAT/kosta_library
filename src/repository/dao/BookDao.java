@@ -2,6 +2,7 @@ package repository.dao;
 
 import business.dto.Book;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -32,5 +33,8 @@ public interface BookDao {
 
 	//저자로 검색
 	public List<Book> getBookByAuthor(String name) throws SQLException;
+
+	//도서 대여 상태 변경
+	void updateBookStatus(Connection con, Book book, int bookStatus) throws SQLException;
 
 }

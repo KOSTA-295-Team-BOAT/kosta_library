@@ -12,6 +12,8 @@ import business.dto.RentDetail;
 import business.dto.User;
 import business.dto.BookRent;
 import exception.DmlException;
+import repository.dao.BookDao;
+import repository.dao.BookDaoImpl;
 import repository.dao.BookRentDao;
 import repository.dao.BookRentDaoImpl;
 import repository.dao.RentDetailDao;
@@ -23,7 +25,10 @@ import repository.util.DbManager;
  */
 public class BookRentService {
 	public static final int RENT_DAY = 5;
-
+	public static final int BOOK_RENT_ABLE = 0;
+	public static final int BOOK_RENT_NOW = 1;
+	
+	BookDao bookDao = new BookDaoImpl();
 	BookRentDao dao = new BookRentDaoImpl();
 	RentDetailDao detailDao = new RentDetailDaoImpl();
 	List<RentDetail> rentDetailList = new ArrayList<RentDetail>();
@@ -68,6 +73,7 @@ public class BookRentService {
 			for (Book book : books) {
 				RentDetail detail = setRentDetail(rent, book);
 				detailDao.addRentDetail(con, detail);
+				bookDao.updateBookStatus(con, book, BOOK_RENT_NOW);
 			}
 
 			con.commit();
@@ -99,12 +105,18 @@ public class BookRentService {
 
 	public BookRent rentOneBook(User user, Book book) throws Exception {
 		BookRent rent;
+		
+		if(book.getBookStatus()==1)
+			throw new DmlException("대여중인 도서입니다...");
+		
+		
 		try {
 			con = DbManager.getConnection();
 			con.setAutoCommit(false);
 			rent = dao.addBookRent(con, setRentInfo(user)); // 커넥션을 같이 넘김, 성공했다면 rent_uid를 받아옴
 			RentDetail rentDetail = setRentDetail(rent, book); // rentDetail 생성
 			detailDao.addRentDetail(con, rentDetail);
+			bookDao.updateBookStatus(con, book, BOOK_RENT_NOW);			
 			con.commit();
 			return rent; // 처리가 끝난 결과를
 
@@ -115,7 +127,7 @@ public class BookRentService {
 			} catch (SQLException e2) {
 				e2.printStackTrace();
 				throw new DmlException("오류가 발생했습니다. (롤백 오류)"); // SQLException을 한번 감쌈
-			}
+			}e.printStackTrace();
 			throw new DmlException("오류가 발생했습니다."); // 기타 다른 에러 전부 묶어서 전달
 
 		} finally {
