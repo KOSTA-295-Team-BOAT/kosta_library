@@ -149,12 +149,12 @@ public class BookDaoImpl implements BookDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Book book = null;
+//		System.out.println("bookuid="+bookUid);
 		try {
 			con = DbManager.getConnection();
-			ps = con.prepareStatement("select * from book where book_id=?");
+			ps = con.prepareStatement("select * from book where book_uid=?");
 			ps.setInt(1, bookUid);
 			rs = ps.executeQuery();
-
 			if (rs.next()) {
 				book = new Book(rs.getInt("book_uid"), rs.getString("book_name"), rs.getString("book_author"),
 						rs.getString("book_publisher"), rs.getInt("category_uid"), rs.getInt("category_uid2"),

@@ -12,6 +12,7 @@ import business.dto.RentDetail;
 import business.dto.User;
 import business.dto.BookRent;
 import exception.DmlException;
+import exception.SearchWrongException;
 import repository.dao.BookDao;
 import repository.dao.BookDaoImpl;
 import repository.dao.BookRentDao;
@@ -145,6 +146,8 @@ public class BookRentService {
 		}
 	}
 
+	//메소드 있는지 확인도 안하고 GPT가 맘대로 만든 코드... 리팩토링 할 때 날리자. 일단 동작은 하니까 두고 리팩토링할때 날리면 됨
+	//TODO 이 메소드 삭제하고 뷰 리팩토링 해야 함
 	public boolean rentBook(String userId, int bookUid) {
 		try {
 			// 사용자와 도서 정보로 User와 Book 객체 생성
@@ -165,4 +168,21 @@ public class BookRentService {
 			return false;
 		}
 	}
+	
+	public List<RentDetail> getRentDetailByUserId(String userId) throws SearchWrongException {
+		Connection con = null;
+		List<RentDetail> rentDetailList = new ArrayList<RentDetail>();
+		try {
+			con = DbManager.getConnection();
+			rentDetailList = detailDao.getRentDetailByUserId(con, userId);
+			if(rentDetailList.isEmpty())
+				throw new SearchWrongException("현재 대여중인 도서가 없습니다.");
+			else return rentDetailList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SearchWrongException("오류가 발생했습니다."); 
+		}
+		
+	}
+	
 }

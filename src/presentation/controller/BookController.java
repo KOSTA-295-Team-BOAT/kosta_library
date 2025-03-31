@@ -1,10 +1,12 @@
 package presentation.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import business.dto.Book;
 import business.dto.BookRent;
+import business.dto.RentDetail;
 import business.dto.User;
 import business.service.book.BookRentService;
 import business.service.book.BookSearchService;
@@ -93,6 +95,34 @@ public class BookController {
 			// TODO 뷰 연결
 		}
 		return rent;
+		
+				
+	}
+
+	public List<RentDetail> getRentDetailByUserId(String userId) {
+		BookRentService service = new BookRentService();
+		List<RentDetail> rentDetailList = new ArrayList<RentDetail>();
+		try {
+			rentDetailList = service.getRentDetailByUserId(userId);
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+//			e.printStackTrace();
+//			System.out.println("대여상세 조회 중 예외발생");
+		}
+		return rentDetailList;
+		
+	}
+	
+	public Book getBookById(int BookUid) {
+		BookSearchService service = new BookSearchService();
+		Book book = new Book();
+		try{
+			book = service.searchBookById(BookUid);
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return book;
+		
 	}
 
 }

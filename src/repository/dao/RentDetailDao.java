@@ -17,16 +17,8 @@ import java.util.List;
 public interface RentDetailDao {
     // 대여 상세 추가
 	public RentDetail addRentDetail(Connection con, RentDetail rentDetail) throws SQLException;
+	
+	//특정 유저의 대여 상세 조회
+	List<RentDetail> getRentDetailByUserId(Connection con, String userId) throws SQLException;
 
-	// 대여 상세 ID로 조회
-    RentDetail getRentDetailById(int rentDetailUid);
-
-    // 모든 대여 상세 조회
-    List<RentDetail> getAllRentDetails();
-
-    // 대여 상세 업데이트
-    void updateRentDetail(RentDetail rentDetail);
-
-    // 대여 상세 삭제
-    void deleteRentDetail(int rentDetailUid);
 }
