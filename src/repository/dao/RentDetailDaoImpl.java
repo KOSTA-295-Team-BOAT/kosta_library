@@ -1,5 +1,6 @@
 package repository.dao;
 
+import java.sql.Connection;
 import java.util.List;
 
 import business.dto.RentDetail;
@@ -34,6 +35,12 @@ public class RentDetailDaoImpl implements RentDetailDao {
 	public void deleteRentDetail(int rentDetailUid) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void addRentDetail(Connection con, RentDetail rentDetail) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
