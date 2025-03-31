@@ -137,7 +137,47 @@ ALTER TABLE `user_favorite`
 ADD CONSTRAINT `FK_user_favorite_category`
 FOREIGN KEY (`category_uid`) REFERENCES `book_category`(`category_uid`);
 
+ALTER TABLE `book`
+ADD CONSTRAINT `FK_book_category_uid`
+FOREIGN KEY (`category_uid`) REFERENCES `book_category`(`category_uid`);
 
+ALTER TABLE `book`
+ADD CONSTRAINT `FK_book_category_uid2`
+FOREIGN KEY (`category_uid2`) REFERENCES `book_category`(`category_uid`);
+
+ALTER TABLE `book`
+ADD CONSTRAINT `FK_book_category_uid3`
+FOREIGN KEY (`category_uid3`) REFERENCES `book_category`(`category_uid`);
+
+ALTER TABLE `book_rent`
+ADD CONSTRAINT `FK_book_rent_user`
+FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`);
+
+ALTER TABLE `rent_detail`
+ADD CONSTRAINT `FK_rent_detail_book`
+FOREIGN KEY (`book_uid`) REFERENCES `book`(`book_uid`);
+
+ALTER TABLE `rent_detail`
+ADD CONSTRAINT `FK_rent_detail_rent`
+FOREIGN KEY (`rent_uid`) REFERENCES `book_rent`(`rent_uid`);
+
+ALTER TABLE `book_reservation`
+ADD CONSTRAINT `FK_reservation_book`
+FOREIGN KEY (`book_uid`) REFERENCES `book`(`book_uid`);
+
+ALTER TABLE `book_reservation`
+ADD CONSTRAINT `FK_reservation_user`
+FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`);
+
+ALTER TABLE `course_recommend`
+ADD CONSTRAINT `FK_course_recommend_course`
+FOREIGN KEY (`course_uid`) REFERENCES `course`(`course_uid`);
+
+ALTER TABLE `course_recommend`
+ADD CONSTRAINT `FK_course_recommend_book`
+FOREIGN KEY (`book_uid`) REFERENCES `book`(`book_uid`);
+
+-- 테스트용
 select * from user;
 DELETE FROM `user`;
 select * from course;
@@ -146,7 +186,7 @@ select * from book_category;
 DELETE FROM `book_category`;
 select * from user_favorite;
 
-
+-- 자바코드 복붙용
 INSERT INTO user (user_id, user_password, course_uid, category_uid, user_status, user_score,user_name) VALUES (?, ?, ?, ?, ?, ?,?);
 
  -- 과정별 추천
@@ -165,12 +205,6 @@ WHERE uf.user_id = ?
 GROUP BY b.book_uid
 ORDER BY rent_count DESC;
 
-
-
-
-
-
-
 -- 도서 상태 확인
 SELECT book_status FROM book WHERE book_uid = ?;
 
@@ -188,23 +222,20 @@ INSERT INTO book_reservation (
 )
 VALUES (?, 0, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), ?);
 
-
 -- 예약 만료 처리 (SQL 기반 자동 처리)
 UPDATE book_reservation
 SET reservation_status = 1
 WHERE reservation_due < NOW() AND reservation_status = 0;
 
 
-
-
+-- 테스트데이터 입력... (deprecated)
 INSERT INTO course (course_uid,course_name, course_open, course_graduate_date)
 VALUES 
 (1,'다크소울 만들기', 1, '2025-12-30'),
 (null, '몬스터 헌터 만들기', 1, '2026-02-30'),
 (null, '닌자 가이덴 만들기', 1, '2027-03-29');
 
-
-
+-- 테스트데이터 입력... (deprecated)
 INSERT INTO `book_category` (category_name)
 VALUES
 ('JAVA'),
