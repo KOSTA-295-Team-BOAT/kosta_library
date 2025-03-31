@@ -12,7 +12,13 @@ select * from rent_detail;
 select * from user;
 
 --------------------------------------------------------------------------------
+-- truncate 체크 일시적으로 끄기
+SET FOREIGN_KEY_CHECKS = 0;
+-- truncate 체크 다시 켜기
+-- SET FOREIGN_KEY_CHECKS = 1;
+
 -- 카테고리 샘플 데이터 입력
+truncate table book_category;
 insert into book_category (category_uid, category_name) value (1 ,'JAVA'); -- 첫 데이터 입력
 insert into book_category (category_name) value ('웹 프로그래밍');
 insert into book_category (category_name) value ('임베디드 프로그래밍');
@@ -32,12 +38,10 @@ alter table book modify book_name varchar(255); -- 책 이름으로 엄청 긴 �
 
 --------------------------------------------------------------------------------
 -- 도서 샘플 정보 입력
-insert into book -- 첫 데이터 입력
-(book_uid, book_name, book_author, book_publisher, category_uid, category_uid2, category_uid3, book_store_date, book_status) value 
-(1, 'java의 정석', '남궁성', '도우출판',1,null,null,now(),0);
-
-insert into book -- 나머지 데이터 입력
+truncate table book;
+insert into book 
 (book_name, book_author, book_publisher, category_uid, category_uid2, category_uid3, book_store_date, book_status) value 
+('java의 정석', '남궁성', '도우출판',1,null,null,now(),0),
 ('이것이 자바다', '남궁성', '도우출판',1,null,null,now(),0),
 ('자바 코드의 품질을 높이는 100가지 방법', '타기르 발레예프', '한빛미디어',1,null,null,now(),0),
 ('코딩은 처음이라 with 자바', '유동환', '영진닷컴',1,null,null,now(),0),
@@ -76,34 +80,25 @@ insert into book -- 나머지 데이터 입력
 ('Do it! 알고리즘 코딩 테스트 - 자바 편', '김종관', '한빛미디어', 9, 1, null, now(), 0),
 ('Node.js 백엔드 개발자 되기', '박승규', '골든래빗(주)', 2, 12, null, now(), 0),
 ('백엔드 입문자를 위한 모던 자바스크립트&Node.js', '이창현', '길벗캠퍼스', 2, 12, null, now(), 0);
-
--- 
+ 
 -- 샘플 과정 추가
-
+truncate table course;
 insert into course (course_name, course_open, course_graduate_date) value 
-('Java 기반 풀스택 개발자 양성과정 1기', 0, 2025-02-29), -- 과거 날짜인 과정
-('임베디드 개발자 양성과정', 1, 2025-09-29),
-('Java 기반 풀스택 개발자 양성과정 2기', 1, 2025-09-29),
-('스프링 백엔드 단기 완성 과정 1기', 1, 2025-04-29),
-('리액트 완전 고수되기 과정 1기', 0, 2025-03-15), -- 과거 날짜인 과정
-('코딩테스트 완전정복 취업 뽀개기 과정 1기', 0, 2025-03-15), -- 과거 날짜인 과정
-('리액트 완전 고수되기 과정 2기', 1, 2025-06-15),
-('코딩테스트 완전정복 취업 뽀개기 과정 2기', 1, 2025-06-15);
-
--- 날짜형식 잘못넣어서 안들어감... 수정
-
-UPDATE course SET course_graduate_date = '2025-02-29' WHERE course_uid = 5;
-UPDATE course SET course_graduate_date = '2025-09-29' WHERE course_uid = 6;
-UPDATE course SET course_graduate_date = '2025-09-29' WHERE course_uid = 7;
-UPDATE course SET course_graduate_date = '2025-04-29' WHERE course_uid = 8;
-UPDATE course SET course_graduate_date = '2025-03-15' WHERE course_uid = 9;
-UPDATE course SET course_graduate_date = '2025-03-15' WHERE course_uid = 10;
-UPDATE course SET course_graduate_date = '2025-06-15' WHERE course_uid = 11;
-UPDATE course SET course_graduate_date = '2025-06-15' WHERE course_uid = 12;
+('Java 기반 풀스택 개발자 양성과정 1기', 0, '2025-01-29 00:00:00'), -- 과거 날짜인 과정
+('임베디드 개발자 양성과정', 1, '2025-09-29 00:00:00'),
+('Java 기반 풀스택 개발자 양성과정 2기', 1, '2025-09-29 00:00:00'),
+('스프링 백엔드 단기 완성 과정 1기', 1, '2025-04-29 00:00:00'),
+('리액트 완전 고수되기 과정 1기', 0, '2025-03-15 00:00:00'), -- 과거 날짜인 과정
+('코딩테스트 완전정복 취업 뽀개기 과정 1기', 0, '2025-03-15 00:00:00'), -- 과거 날짜인 과정
+('리액트 완전 고수되기 과정 2기', 1, '2025-06-15 00:00:00'),
+('코딩테스트 완전정복 취업 뽀개기 과정 2기', 1, '2025-06-15 00:00:00');
 
 --------------------------------------------------------------------------------
 
 -- 과정별 추천도서 데이터입력
+
+select * from course_recommend;
+truncate table course_recommend;
 -- Java 기반 풀스택 개발자 양성과정 1기 (course_uid = 5)
 INSERT INTO course_recommend (course_uid, book_uid) VALUES
 (5, 1),  -- java의 정석
@@ -170,3 +165,8 @@ INSERT INTO course_recommend (course_uid, book_uid) VALUES
 (12, 31), -- 자바 편 문제 풀이 전략
 (12, 32); -- Do it! 알고리즘 코딩 테스트
 --------------------------------------------------------------------------------
+-- truncate 체크 다시 켜기
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
