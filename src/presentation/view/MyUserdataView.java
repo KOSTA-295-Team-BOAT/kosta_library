@@ -1,11 +1,17 @@
 package presentation.view;
 
+import java.util.List;
 import java.util.Scanner;
+
+import business.dto.RentDetail;
 import business.dto.User;
+import presentation.controller.BookController;
+import util.SessionManager;
 
 public class MyUserdataView {
     // 컨트롤러에서 전달받은 User 객체를 이용하여 뷰를 출력
-    public void display(User user, String categoryName) {
+    BookController controller = new BookController();
+	public void display(User user, String categoryName) {
         // DB에서 조회한 데이터 사용: 아이디와 독서 점수는 실제 DB 값, 이름은 DB에서 가져온 값
         String id = user.getUserId();
         int score = user.getUserScore();
@@ -30,11 +36,19 @@ public class MyUserdataView {
         System.out.println("독서 등급: " + grade);
         System.out.println("관심분야: " + (categoryName != null ? categoryName : "설정되지 않음"));
 
-        // TODO: 내가 대여중인 책 목록 기능 구현 필요 (List<Book> myBookRentList)
-        System.out.println("대여중인 책: 기능 미구현");
+        System.out.println("대여중인 책: ");
+        System.out.println("---------------------------------------------------------------------------------");
+        List<RentDetail> rentDetailList = controller.getRentDetailByUserId(SessionManager.getCurrentUserId());
+        if (!rentDetailList.isEmpty()) {
+        	for(RentDetail detail : rentDetailList) {
+        		System.out.println(controller.getBookById(detail.getBookUid()).getBookName() + " | " + detail.getRentReturnDue()+" 까지");
+        	}
+        }
+        System.out.println("---------------------------------------------------------------------------------");        
+        
         // TODO: 내가 예약중인 책 목록 기능 구현 필요 (List<Book> myReservationBookList)
         System.out.println("예약중인 책: 기능 미구현");
-
+        
         System.out.print("돌아가시려면 엔터를 누르세요...");
         new Scanner(System.in).nextLine();
 
