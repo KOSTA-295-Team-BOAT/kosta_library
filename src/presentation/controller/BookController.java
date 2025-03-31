@@ -30,7 +30,8 @@ public class BookController {
 		} catch (SearchWrongException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
-			System.out.println("예외발생");
+			System.out.println("제목으로 검색중 예외발생");
+			System.out.println(e.getMessage());
 			// TODO 뷰 연결
 		}
 		return returnBookList;
@@ -44,7 +45,8 @@ public class BookController {
 		} catch (SearchWrongException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
-			System.out.println("예외발생");
+			System.out.println("저자 검색중 예외발생");
+			System.out.println(e.getMessage());
 			// TODO 뷰 연결
 		}
 		return returnBookList;
@@ -58,7 +60,8 @@ public class BookController {
 		} catch (SearchWrongException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
-			System.out.println("예외발생");
+			System.out.println("출판사 검색중 예외발생");
+			System.out.println(e.getMessage());
 			// TODO 뷰 연결
 		}
 		return returnBookList;
@@ -70,7 +73,8 @@ public class BookController {
 		try {
 			rent = service.rentOneBook(user, book);
 		} catch (Exception e) {
-			System.out.println("예외발생");
+			System.out.println("도서 1권 대여중 예외발생");
+			System.out.println(e.getMessage());
 			// TODO 뷰 연결
 		}
 		return rent;
@@ -82,7 +86,7 @@ public class BookController {
 		try {
 			rent = service.rentBooks(user, books);
 		} catch (Exception e) {
-			System.out.println("예외발생");
+			System.out.println("도서 여러권 대여중 예외발생");
 			// TODO 뷰 연결
 		}
 		return rent;
