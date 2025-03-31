@@ -20,7 +20,7 @@ public class BookSearchView {
 	public BookSearchView(BookController controller) {
 		// 생성자 주입으로 컨트롤러를 초기화한 경우
 		this.controller = controller;
-		this.result = new BookSearchResultView();
+		this.result = new BookSearchResultView(controller);
 	}
 
 	public void display() {
