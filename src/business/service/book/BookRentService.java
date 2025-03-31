@@ -145,6 +145,8 @@ public class BookRentService {
 		}
 	}
 
+	//메소드 있는지 확인도 안하고 GPT가 맘대로 만든 코드... 리팩토링 할 때 날리자. 일단 동작은 하니까 두고 리팩토링할때 날리면 됨
+	//TODO 이 메소드 삭제하고 뷰 리팩토링 해야 함
 	public boolean rentBook(String userId, int bookUid) {
 		try {
 			// 사용자와 도서 정보로 User와 Book 객체 생성
