@@ -1,9 +1,11 @@
 package presentation.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import business.dto.Book;
+import exception.SearchWrongException;
 import presentation.controller.BookController;
 
 /**
@@ -29,6 +31,9 @@ public class BookSearchView {
 		boolean isRunningMenu = true;
 
 		do {
+			
+			try {
+			System.out.println("---------------------------------------------------------------------");
 			System.out.println("1. 제목으로 검색 | 2. 저자로 검색 | 3. 출판사로 검색 | 9. 돌아가기");
 			System.out.print(">");
 			String inputString = null;
@@ -40,25 +45,40 @@ public class BookSearchView {
 			case "9" -> isRunningMenu = false;
 			default -> System.out.println("잘못된 입력입니다.");
 			}
+			}catch (SearchWrongException e) {
+				System.out.println(e.getMessage());
+			}
 		} while (isRunningMenu);
 		System.out.println("돌아갑니다."); // while문이 종료되므로 루프를 빠져나온다.
 	}
 	
-	List<Book> inputName() {
-		System.out.println("검색할 책 입력"); System.out.print(">");
+	List<Book> inputName() throws SearchWrongException {
+		System.out.println("검색할 책 입력");
+		System.out.print(">");
 		String input = sc.nextLine();
-		return controller.getBookByBookName(input);
+		if (input.trim().isEmpty()) {
+			throw new SearchWrongException("내용을 입력해 주세요");
+		} else
+			return controller.getBookByBookName(input);
 	}
 
-	List<Book> inputAuthor() {
-		System.out.println("저자 입력"); System.out.print(">");
+	List<Book> inputAuthor() throws SearchWrongException {
+		System.out.println("저자 입력");
+		System.out.print(">");
 		String input = sc.nextLine();
-		return controller.getBookByBookAuthor(input);
+		if (input.trim().isEmpty()) {
+			throw new SearchWrongException("내용을 입력해 주세요");
+		} else
+			return controller.getBookByBookName(input);
 	}
 
-	List<Book> inputPublisher() {
-		System.out.println("출판사 입력"); System.out.print(">");
+	List<Book> inputPublisher() throws SearchWrongException {
+		System.out.println("출판사 입력");
+		System.out.print(">");
 		String input = sc.nextLine();
-		return controller.getBookByBookPublisher(input);
+		if (input.trim().isEmpty()) {
+			throw new SearchWrongException("내용을 입력해 주세요");
+		} else
+			return controller.getBookByBookPublisher(input);
 	}
 }

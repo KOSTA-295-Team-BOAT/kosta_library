@@ -40,7 +40,7 @@ public class BookRentService {
 		BookRent rent = new BookRent();
 		// 대여 날짜 및 반납 날짜 기록을 위한 날짜 받아오기
 		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		String due = LocalDateTime.now().plusDays(RENT_DAY).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		String due = LocalDateTime.now().plusDays(RENT_DAY).format(DateTimeFormatter.ofPattern("yyyy-MM-dd 00:00:00"));
 		// 대여ID는 Auto-Increment로 DB에 자동 기록된다. 여기서 따로 초기화해주지 않는다. (null로 넘어감)
 
 		rent.setUserId(user.getUserId());
@@ -105,6 +105,8 @@ public class BookRentService {
 
 	public BookRent rentOneBook(User user, Book book) throws Exception {
 		BookRent rent;
+		
+		
 		
 		if(book.getBookStatus()==1)
 			throw new DmlException("대여중인 도서입니다...");
