@@ -10,6 +10,7 @@ import util.SessionManager;
 
 public class BookSearchResultView {
 	final int DISPLAY_BOOK_PER_PAGE = 5;
+	final int MAX_BOOK_NAME_LENGTH = 15;
 	Scanner scanner = new Scanner(System.in);
 	BookController controller;
 
@@ -26,24 +27,39 @@ public class BookSearchResultView {
 		page = (book.size() / DISPLAY_BOOK_PER_PAGE) + 1;
 		int currentPage = 1;
 		while (isRunning) {
-			System.out.println(book);
+			String bookName = null;
+			// System.out.println(book);
+			System.out.println("-----------------------------------------------------------------------------");
+			int currentLength = book.size() % DISPLAY_BOOK_PER_PAGE;
+			for (int i = 0; i < currentLength; i++) {
+				if (book.get(i).getBookName().length() > MAX_BOOK_NAME_LENGTH)
+					bookName = book.get(i).getBookName().substring(0, MAX_BOOK_NAME_LENGTH);
+				else
+					bookName = book.get(i).getBookName();
+				System.out.println("[" + i + "]" + " 제목 : " + bookName + " | 저자 : " + book.get(i).getBookAuthor()
+						+ " | 출판사 : " + book.get(i).getBookPublisher() + " ");
+//				System.out.println(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + i)));
+			}
+
 			System.out.println(currentPage + "/" + page);
 			System.out.println("p : 이전 페이지 | n : 다음 페이지 | c : 북카트에 담기 | 번호 : 도서 대여 | b : 돌아가기");
 			String str = scanner.nextLine();
-			switch (str) {
-			case "p" -> System.out.println("이전페이지기능(구현예정)");
-			case "n" -> System.out.println("다음페이지기능(구현예정)");
-			case "c" -> System.out.println("북카트에 담기 기능(구현예정)");
-			case "1" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 0)));
-			case "2" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 1)));
-			case "3" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 2)));
-			case "4" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 3)));
-			case "5" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 4)));
-			case "b" -> System.out.println("돌아가기");
+			try {
+				switch (str) {
+				case "p" -> System.out.println("이전페이지기능(구현예정)");
+				case "n" -> System.out.println("다음페이지기능(구현예정)");
+				case "c" -> System.out.println("북카트에 담기 기능(구현예정)");
+				case "1" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 0)));
+				case "2" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 1)));
+				case "3" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 2)));
+				case "4" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 3)));
+				case "5" -> callRent(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + 4)));
+				case "b" -> System.out.println("돌아가기");
+				}
+			} catch (Exception e) {
+				System.out.println("잘못된 입력입니다.");
 			}
-
 		}
-
 	}
 
 	User makeIdOnlyDto(String userId) { // 세션ID만 있고 유저정보 전체를 들고있지 않은데 Rent에서는 UserDto 전체를 쓰고있다... 리팩토링할 시간 없으니 그냥 어댑터
@@ -60,7 +76,11 @@ public class BookSearchResultView {
 	}
 
 	void callRent(Book book) {
-		controller.rentOneBook(makeIdOnlyDto(SessionManager.getCurrentUserId()), book);
+		try {
+			controller.rentOneBook(makeIdOnlyDto(SessionManager.getCurrentUserId()), book);
+		} catch (Exception e) {
+			System.out.println("잘못된 입력입니다.");
+		}
 	}
 
 }
