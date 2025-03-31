@@ -142,4 +142,25 @@ public class BookRentService {
 
 		}
 	}
+
+	public boolean rentBook(String userId, int bookUid) {
+		try {
+			// 사용자와 도서 정보로 User와 Book 객체 생성
+			User user = new User();
+			user.setUserId(userId);
+			
+			Book book = bookDao.getBookById(bookUid);
+			if (book == null) {
+				return false;
+			}
+			
+			// 기존 rentOneBook 메서드 활용
+			BookRent result = rentOneBook(user, book);
+			return result != null;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
