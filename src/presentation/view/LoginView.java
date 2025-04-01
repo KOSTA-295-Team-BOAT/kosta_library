@@ -2,13 +2,15 @@ package presentation.view;
 
 import java.util.Scanner;
 
+import util.ClearScreen;
+
 /**
  * 메인뷰에서 로그인 부분을 출력해주는 클래스
  * @author 
  */
 public class LoginView {
     public String[] inputLoginInfo() {
-    	System.out.println("===== 로그인 화면 =====");
+    	printLoginView();
         Scanner scanner = new Scanner(System.in);
         System.out.print("ID를 입력하세요: ");
         String id = scanner.nextLine();
@@ -18,15 +20,32 @@ public class LoginView {
     }
 
     public void printLoginSuccess() {
-        System.out.println("로그인 성공! 메인 화면으로 이동합니다.");
+    	System.out.println("");
+    	System.out.println("로그인 성공! 메인 화면으로 이동합니다.");
+		System.out.println("엔터를 누르면 진행합니다 ...");
+		new Scanner(System.in).nextLine();
     }
 
     public void printLoginFail() {
         System.out.println("로그인 실패! ID 또는 비밀번호를 확인해주세요.");
     }
 	public void printLoginView() {
-		// TODO Auto-generated method stub
-		
+    	System.out.println("");
+    	ClearScreen.clear();
+    	System.out.println("--------------------------------------------------------------------------------");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                             [ B.O.A.T ]                                      |");
+    	System.out.println("|                   Book of All Time : KOSTA Book System                       |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|            시스템에 로그인합니다. ID와 패스워드를 입력해주세요.              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("--------------------------------------------------------------------------------");
+        System.out.println("                                                                                ");
 	}
     
 }

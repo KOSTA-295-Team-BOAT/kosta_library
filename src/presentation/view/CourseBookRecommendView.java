@@ -4,18 +4,19 @@ import java.util.List;
 import java.util.Scanner;
 import business.dto.Book;
 import business.service.book.CourseRecommendService;
+import util.ClearScreen;
 
 public class CourseBookRecommendView {
     private final Scanner scanner = new Scanner(System.in);
+    //컨트롤러 거치도록 리팩토링 해야 함
     private final CourseRecommendService recommendService = new CourseRecommendService();
     private final int PAGE_SIZE = 5;
 
     public void display(String userId) {
-        System.out.println("===== 과정별 도서 추천 =====");
-        
+    	displayMenu();
         List<Book> allBooks = recommendService.getRecommendedBooksByCourse(userId);
         if (allBooks.isEmpty()) {
-            System.out.println("추천할 도서가 없습니다.");
+            displayEmptyList();
             return;
         }
 
@@ -45,17 +46,28 @@ public class CourseBookRecommendView {
                             new BookDetailView().display(allBooks.get(bookIndex));
                         }
                     } catch (NumberFormatException e) {
-                        System.out.println("잘못된 입력입니다.");
+                    	CommonMessageView.wrongInput(); //잘못된 입력입니다 메시지
                     }
             }
         }
+        
+        
     }
 
+    private void displayEmptyList() {
+    	System.out.println("--------------------------------------------------------------------------------");
+        System.out.println();
+    	System.out.println("추천할 도서가 없습니다.");
+    	System.out.println();
+    	System.out.println("--------------------------------------------------------------------------------");
+		System.out.println("엔터를 누르면 진행합니다 ...");
+		new Scanner(System.in).nextLine();
+    }
     private void displayBookList(List<Book> books, int page) {
-        System.out.println("\n=== 추천 도서 목록 ===");
-        int start = page * PAGE_SIZE;
+//        System.out.println("\n=== 추천 도서 목록 ===");
+    	int start = page * PAGE_SIZE;
         int end = Math.min(start + PAGE_SIZE, books.size());
-        
+    	System.out.println("--------------------------------------------------------------------------------");
         for (int i = start; i < end; i++) {
             Book book = books.get(i);
             System.out.printf("%d. %s (상태: %s)\n", 
@@ -64,5 +76,26 @@ public class CourseBookRecommendView {
                 book.getBookStatus() == 0 ? "대여가능" : "대여중"
             );
         }
+        System.out.println("--------------------------------------------------------------------------------");
+		System.out.println("엔터를 누르면 진행합니다 ...");
+		new Scanner(System.in).nextLine();
+    }
+    void displayMenu() {
+    	System.out.println("");
+    	ClearScreen.clear();
+    	System.out.println("--------------------------------------------------------------------------------");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                             [ B.O.A.T ]                                      |");
+    	System.out.println("|                   Book of All Time : KOSTA Book System                       |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                       등록 과정 기반 도서 추천                               |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("--------------------------------------------------------------------------------");
+    	System.out.println();
     }
 }

@@ -3,6 +3,7 @@ package presentation.view;
 import java.util.Scanner;
 
 import presentation.controller.BookController;
+import util.ClearScreen;
 
 public class MainMenuView {
 	
@@ -26,32 +27,59 @@ public class MainMenuView {
                     new MypageView().display();
                     break;
                 case 5:
-                    System.out.println("로그아웃에 성공했습니다.");
+                    System.out.println("시스템에서 로그아웃합니다.");
+    				System.out.println("엔터를 누르면 진행합니다 ...");
+    				new Scanner(System.in).nextLine();
                     return;
                 default:
-                    System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
+                	CommonMessageView.wrongInput(); //잘못된 입력입니다 메시지
             }
         } while (menu != 5);
     }
 
     private void printMenu() {
-        System.out.println("[ 메인 화면 ]");
-        System.out.println("===== 메뉴 선택 =====");
-        System.out.println("1. 도서추천");
-        System.out.println("2. 도서검색");
-        System.out.println("3. 도서 대여/반납/예약");
-        System.out.println("4. 마이페이지");
-        System.out.println("5. 로그아웃");
+    	System.out.println("");
+    	ClearScreen.clear();
+    	System.out.println("--------------------------------------------------------------------------------");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                             [ B.O.A.T ]                                      |");
+    	System.out.println("|                   Book of All Time : KOSTA Book System                       |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                       실행할 기능을 선택해 주세요                            |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("--------------------------------------------------------------------------------");
+        System.out.println("                                                                                ");
+        System.out.println("1. 도서추천 | 2. 도서검색 | 3. 대여 / 반납 / 예약 | 4. 마이페이지 | 5. 로그아웃 ");
+        System.out.println();
+		System.out.println("--------------------------------------------------------------------------------");
+//        System.out.print("메뉴 선택 >");        
     }
 
     private void displayBookManagementMenu(Scanner sc) {
         while (true) {
-            System.out.println("\n===== 도서 관리 =====");
-            System.out.println("1. 도서 대여");
-            System.out.println("2. 도서 반납");
-            System.out.println("3. 도서 예약");
-            System.out.println("4. 이전 메뉴");
-            System.out.print("메뉴 선택: ");
+        	System.out.println("--------------------------------------------------------------------------------");
+        	System.out.println("|                                                                              |");
+        	System.out.println("|                                                                              |");
+        	System.out.println("|                                                                              |");
+        	System.out.println("|                             [ B.O.A.T ]                                      |");
+        	System.out.println("|                   Book of All Time : KOSTA Book System                       |");
+        	System.out.println("|                                                                              |");
+        	System.out.println("|                                                                              |");
+        	System.out.println("|                       도서 대여 / 반납 / 예약 메뉴                           |");
+        	System.out.println("|                                                                              |");
+        	System.out.println("|                                                                              |");
+        	System.out.println("|                                                                              |");
+        	System.out.println("--------------------------------------------------------------------------------");
+        	System.out.println();
+        	System.out.println("1. 북카트 보기 | 2. 도서 반납 | 3. 도서 예약 | 4. 이전 메뉴");
+            System.out.println();
+    		System.out.println("--------------------------------------------------------------------------------");
+//            System.out.print("메뉴 선택 >");
             
             try {
                 int choice = Integer.parseInt(sc.nextLine());
@@ -73,7 +101,7 @@ public class MainMenuView {
                     case 4:
                         return;
                     default:
-                        System.out.println("잘못된 선택입니다.");
+                        System.out.println("잘못된 입력입니다.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("숫자를 입력해주세요.");
@@ -82,7 +110,7 @@ public class MainMenuView {
     }
 
     private int getMenu(Scanner sc) {
-        System.out.print("메뉴 선택: ");
+        System.out.print("메뉴 선택 > ");
         try {
             return Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException e) {

@@ -94,7 +94,7 @@ public class BookDetailView {
 				return book;
 
 			default:
-				System.out.println("잘못된 입력입니다.");
+				CommonMessageView.wrongInput(); //잘못된 입력입니다 메시지
 			}
 		}
 	}
