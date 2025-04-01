@@ -13,6 +13,7 @@ import repository.util.DbManager;
 
 /**
  * 사용자 관련 DAO 구현 클래스
+ * @author 황태윤
  */
 public class UserDaoImpl implements UserDao {
 
