@@ -84,4 +84,14 @@ public class BookReservationService {
             DbManager.close(con, null, null);
         }
     }
+    
+    public List<BookReservation> getActiveReservationsByUserId(String userId) throws Exception {
+        Connection con = null;
+        try {
+            con = DbManager.getConnection();
+            return reservationDao.getActiveReservationsByUserId(con, userId);
+        } finally {
+            DbManager.close(con, null, null);
+        }
+    }
 }

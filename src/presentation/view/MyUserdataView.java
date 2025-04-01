@@ -3,6 +3,7 @@ package presentation.view;
 import java.util.List;
 import java.util.Scanner;
 
+import business.dto.BookReservation;
 import business.dto.RentDetail;
 import business.dto.User;
 import presentation.controller.BookController;
@@ -47,7 +48,16 @@ public class MyUserdataView {
         System.out.println("---------------------------------------------------------------------------------");        
         
         // TODO: 내가 예약중인 책 목록 기능 구현 필요 (List<Book> myReservationBookList)
-        System.out.println("예약중인 책: 기능 미구현");
+        System.out.println("예약중인 책:");
+        List<BookReservation> reservationList = controller.getActiveReservationsByUserId(SessionManager.getCurrentUserId());
+        if (!reservationList.isEmpty()) {
+            for (BookReservation res : reservationList) {
+                String bookName = controller.getBookById(res.getBookUid()).getBookName();
+                System.out.println(bookName + " | 예약일: " + res.getReservationDate() + " | 만료일: " + res.getReservationDue());
+            }
+        } else {
+            System.out.println("예약 중인 책이 없습니다.");
+        }
         
         System.out.print("돌아가시려면 엔터를 누르세요...");
         new Scanner(System.in).nextLine();

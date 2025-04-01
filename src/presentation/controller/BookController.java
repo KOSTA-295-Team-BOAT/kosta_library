@@ -6,6 +6,7 @@ import java.util.List;
 
 import business.dto.Book;
 import business.dto.BookRent;
+import business.dto.BookReservation;
 import business.dto.RentDetail;
 import business.dto.User;
 import business.service.book.BookRentService;
@@ -150,5 +151,15 @@ public class BookController {
 		return false;
     }
 
+    public List<BookReservation> getActiveReservationsByUserId(String userId) {
+        BookReservationService service = new BookReservationService();
+        try {
+            return service.getActiveReservationsByUserId(userId);
+        } catch (Exception e) {
+            System.out.println("예약 정보 조회 중 오류가 발생했습니다.");
+            return new ArrayList<>();
+        }
+    }
+    
 	
 }
