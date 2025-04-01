@@ -74,7 +74,7 @@ public class BookReservationService {
             reservation.setReservationDue(now.plusDays(3).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
             reservationDao.addReservation(con, reservation);
-            System.out.println("도서 예약이 완료되었습니다.");
+//            System.out.println("도서 예약이 완료되었습니다.");
             return true;
 
         } catch (Exception e) {
