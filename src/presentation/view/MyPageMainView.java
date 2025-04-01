@@ -2,7 +2,6 @@ package presentation.view;
 
 import java.util.Scanner;
 import business.dto.User;
-import exception.SearchWrongException;
 import util.SessionManager;
 import repository.dao.UserDao;
 import repository.dao.UserDaoImpl;
@@ -36,12 +35,7 @@ public class MyPageMainView {
 			switch (choice) {
 			case 1:
 				// 내 정보 확인
-				try {
-					new presentation.controller.MyPageController().handleViewUserData();
-				} catch (SearchWrongException e) {
-//					e.printStackTrace();
-					System.out.println(e.getMessage());
-				}
+				new presentation.controller.MyPageController().handleViewUserData();
 				break;
 			case 2:
 				// 내 정보 수정

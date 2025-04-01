@@ -45,7 +45,7 @@ public class BookSearchService {
 		try {
 			returnBookList = bookDao.getBookByBookName(name);
 		} catch (SQLException e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			throw new SearchWrongException(e.getMessage());
 		}
 		if (returnBookList.isEmpty())
@@ -62,7 +62,7 @@ public class BookSearchService {
 		try {
 			returnBookList = bookDao.getBookByAuthor(name);
 		} catch (SQLException e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			throw new SearchWrongException(e.getMessage());
 		}
 		if (returnBookList.isEmpty())
@@ -79,7 +79,7 @@ public class BookSearchService {
 		try {
 			returnBookList = bookDao.getBookByBookPublisher(name);
 		} catch (SQLException e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			throw new SearchWrongException(e.getMessage());
 		}
 		if (returnBookList.isEmpty())
@@ -95,7 +95,7 @@ public class BookSearchService {
 		try {
 			book = bookDao.getBookById(bookUid);
 		} catch (SQLException e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			throw new SearchWrongException(e.getMessage());
 		}
 		if (book == null)

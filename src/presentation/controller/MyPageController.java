@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import business.dto.User;
-import exception.SearchWrongException;
 import presentation.view.MyPageMainView;
 import presentation.view.MyUserdataView;
 import repository.dao.BookCategoryDao;
@@ -23,7 +22,7 @@ public class MyPageController {
         
     }
 
-    public void handleViewUserData() throws SearchWrongException {
+    public void handleViewUserData() {
         String currentUserId = SessionManager.getCurrentUserId();
         if (currentUserId != null) {
             User currentUser = new UserController().getUserById(currentUserId); // DB에서 사용자 정보 가져오기

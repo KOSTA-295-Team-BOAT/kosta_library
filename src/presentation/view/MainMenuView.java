@@ -2,7 +2,6 @@ package presentation.view;
 
 import java.util.Scanner;
 
-import exception.DmlException;
 import presentation.controller.BookController;
 
 public class MainMenuView {
@@ -69,11 +68,7 @@ public class MainMenuView {
                     case 3:
                         System.out.println("도서 예약 기능 실행");
                         BookReservationView bookReservationView = new BookReservationView();
-					try {
-						bookReservationView.display();
-					} catch (DmlException e) {
-						System.out.println(e.getMessage());
-					}
+                        bookReservationView.display();
                         break;
                     case 4:
                         return;
