@@ -48,9 +48,45 @@ public class BookRentDaoImpl implements BookRentDao {
 	}
 
 	@Override
-	public BookRent getBookRentById(String rentUid) {
-		// TODO Auto-generated method stub
-		return null;
+	public void updateRentStatus(Connection con, int rentUid, int status) throws SQLException {
+	    String sql = "UPDATE book_rent SET rent_status = ? WHERE rent_uid = ?";
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setInt(1, status);
+	        ps.setInt(2, rentUid);
+	        ps.executeUpdate();
+	    }
+	}
+	
+	@Override
+	public void updateRentStatusAndReturnDate(Connection con, int rentUid, int status, String returnDate) throws SQLException {
+	    String sql = "UPDATE book_rent SET rent_status = ?, rent_return_date = ? WHERE rent_uid = ?";
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setInt(1, status);
+	        ps.setString(2, returnDate);
+	        ps.setInt(3, rentUid);
+	        ps.executeUpdate();
+	    }
+	}
+	
+	
+	@Override
+	public BookRent getBookRentById(Connection con, int rentUid) throws SQLException {
+	    String query = "SELECT * FROM book_rent WHERE rent_uid = ?";
+	    try (PreparedStatement ps = con.prepareStatement(query)) {
+	        ps.setInt(1, rentUid);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                BookRent rent = new BookRent();
+	                rent.setRentUid(rs.getInt("rent_uid"));
+	                rent.setUserId(rs.getString("user_id"));
+	                rent.setRentStatus(rs.getInt("rent_status"));
+	                rent.setRentDate(rs.getString("rent_date"));
+	                rent.setRentDue(rs.getString("rent_due"));
+	                return rent;
+	            }
+	        }
+	    }
+	    return null;
 	}
 
 	@Override

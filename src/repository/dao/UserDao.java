@@ -1,6 +1,9 @@
 package repository.dao;
 
 import business.dto.User;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -33,4 +36,8 @@ public interface UserDao {
 
     // 회원 즐겨찾기 카테고리 조회
     List<Integer> getUserFavoriteCategories(String userId);
+
+	void updateUserScore(Connection con, String userId, int updatedScore) throws SQLException;
+
+	User getUserById(Connection con, String userId) throws SQLException;
 }

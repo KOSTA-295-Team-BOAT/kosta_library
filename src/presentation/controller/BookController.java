@@ -125,4 +125,16 @@ public class BookController {
 		
 	}
 
+	public RentDetail returnOneBook(int rentDetailUid) {
+		BookRentService service = new BookRentService();
+		RentDetail rentDetail = null;
+		try {
+			rentDetail = service.returnOneBook(rentDetailUid);
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return rentDetail;
+		
+	}
+	
 }

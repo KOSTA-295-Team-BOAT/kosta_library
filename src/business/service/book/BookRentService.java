@@ -19,6 +19,8 @@ import repository.dao.BookRentDao;
 import repository.dao.BookRentDaoImpl;
 import repository.dao.RentDetailDao;
 import repository.dao.RentDetailDaoImpl;
+import repository.dao.UserDao;
+import repository.dao.UserDaoImpl;
 import repository.util.DbManager;
 
 /**
@@ -28,7 +30,7 @@ public class BookRentService {
 	public static final int RENT_DAY = 5;
 	public static final int BOOK_RENT_ABLE = 0;
 	public static final int BOOK_RENT_NOW = 1;
-	
+
 	BookDao bookDao = new BookDaoImpl();
 	BookRentDao dao = new BookRentDaoImpl();
 	RentDetailDao detailDao = new RentDetailDaoImpl();
@@ -68,8 +70,8 @@ public class BookRentService {
 		try {
 			con = DbManager.getConnection();
 			con.setAutoCommit(false);
-			
-			rent = dao.addBookRent(con, setRentInfo(user)); 
+
+			rent = dao.addBookRent(con, setRentInfo(user));
 
 			for (Book book : books) {
 				RentDetail detail = setRentDetail(rent, book);
@@ -106,20 +108,17 @@ public class BookRentService {
 
 	public BookRent rentOneBook(User user, Book book) throws Exception {
 		BookRent rent;
-		
-		
-		
-		if(book.getBookStatus()==1)
+
+		if (book.getBookStatus() == 1)
 			throw new DmlException("대여중인 도서입니다...");
-		
-		
+
 		try {
 			con = DbManager.getConnection();
 			con.setAutoCommit(false);
 			rent = dao.addBookRent(con, setRentInfo(user)); // 커넥션을 같이 넘김, 성공했다면 rent_uid를 받아옴
 			RentDetail rentDetail = setRentDetail(rent, book); // rentDetail 생성
 			detailDao.addRentDetail(con, rentDetail);
-			bookDao.updateBookStatus(con, book, BOOK_RENT_NOW);			
+			bookDao.updateBookStatus(con, book, BOOK_RENT_NOW);
 			con.commit();
 			return rent; // 처리가 끝난 결과를
 
@@ -130,7 +129,8 @@ public class BookRentService {
 			} catch (SQLException e2) {
 				e2.printStackTrace();
 				throw new DmlException("오류가 발생했습니다. (롤백 오류)"); // SQLException을 한번 감쌈
-			}e.printStackTrace();
+			}
+			e.printStackTrace();
 			throw new DmlException("오류가 발생했습니다."); // 기타 다른 에러 전부 묶어서 전달
 
 		} finally {
@@ -146,43 +146,125 @@ public class BookRentService {
 		}
 	}
 
-	//메소드 있는지 확인도 안하고 GPT가 맘대로 만든 코드... 리팩토링 할 때 날리자. 일단 동작은 하니까 두고 리팩토링할때 날리면 됨
-	//TODO 이 메소드 삭제하고 뷰 리팩토링 해야 함
+	// 메소드 있는지 확인도 안하고 GPT가 맘대로 만든 코드... 리팩토링 할 때 날리자. 일단 동작은 하니까 두고 리팩토링할때 날리면 됨
+	// TODO 이 메소드 삭제하고 뷰 리팩토링 해야 함
 	public boolean rentBook(String userId, int bookUid) {
 		try {
 			// 사용자와 도서 정보로 User와 Book 객체 생성
 			User user = new User();
 			user.setUserId(userId);
-			
+
 			Book book = bookDao.getBookById(bookUid);
 			if (book == null) {
 				return false;
 			}
-			
+
 			// 기존 rentOneBook 메서드 활용
 			BookRent result = rentOneBook(user, book);
 			return result != null;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
-	
+
 	public List<RentDetail> getRentDetailByUserId(String userId) throws SearchWrongException {
 		Connection con = null;
 		List<RentDetail> rentDetailList = new ArrayList<RentDetail>();
 		try {
 			con = DbManager.getConnection();
 			rentDetailList = detailDao.getRentDetailByUserId(con, userId);
-			if(rentDetailList.isEmpty())
+			if (rentDetailList.isEmpty())
 				throw new SearchWrongException("현재 대여중인 도서가 없습니다.");
-			else return rentDetailList;
+			else
+				return rentDetailList;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new SearchWrongException("오류가 발생했습니다."); 
+			throw new SearchWrongException("오류가 발생했습니다.");
 		}
-		
+
 	}
-	
+
+	public RentDetail returnOneBook(int rentDetailUid) throws DmlException {
+		Connection con = null;
+		RentDetail rentDetail = null;
+
+		try {
+			con = DbManager.getConnection();
+			con.setAutoCommit(false);
+
+			rentDetail = detailDao.getRentDetailById(con, rentDetailUid);
+			if (rentDetail == null) {
+				throw new DmlException("해당 대여 정보가 존재하지 않습니다.");
+			}
+
+			rentDetail.setRentReturnState(1);
+			detailDao.updateRentDetail(con, rentDetail);
+
+			Book book = bookDao.getBookById(rentDetail.getBookUid());
+			if (book != null) {
+				bookDao.updateBookStatus(con, book, BOOK_RENT_ABLE);
+			}
+
+			BookRent rentInfo = dao.getBookRentById(con, rentDetail.getRentUid());
+			String userId = rentInfo.getUserId();
+			LocalDateTime rentDue = LocalDateTime.parse(rentInfo.getRentDue(),
+					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+			LocalDateTime now = LocalDateTime.now();
+
+			UserDao userDao = new UserDaoImpl();
+			User user = userDao.getUserById(con, userId);
+			if (user == null) {
+				throw new DmlException("사용자 정보를 찾을 수 없습니다.");
+			}
+
+			int currentScore = user.getUserScore();
+			int updatedScore;
+
+			if (now.isAfter(rentDue)) {
+				updatedScore = Math.max(0, currentScore - 10);
+			} else {
+				updatedScore = currentScore + 5;
+			}
+
+			userDao.updateUserScore(con, userId, updatedScore);
+
+			List<RentDetail> remains = detailDao.getNotReturnedDetailByRentUid(con, rentDetail.getRentUid());
+			if (remains.isEmpty()) {
+				// 모든 도서 반납 완료 → rent_status와 rent_return_date 갱신
+				int rentStatus = 0;
+				if (now.isAfter(rentDue))
+					rentStatus = 3;
+				else
+					rentStatus = 1; // 3: 연체반납, 1: 정상반납
+				String returnDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+				dao.updateRentStatusAndReturnDate(con, rentDetail.getRentUid(), rentStatus, returnDate);
+			}
+
+			con.commit();
+			return rentDetail;
+
+		} catch (Exception e) {
+			try {
+				if (con != null)
+					con.rollback();
+			} catch (SQLException rollbackEx) {
+				rollbackEx.printStackTrace();
+				throw new DmlException("오류가 발생했습니다. (롤백 오류)");
+			}
+			e.printStackTrace();
+			throw new DmlException("도서를 반납하는 중 오류가 발생했습니다.");
+		} finally {
+			if (con != null) {
+				try {
+					con.setAutoCommit(true);
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new DmlException("오류가 발생했습니다. (커넥션 오류)");
+				}
+			}
+		}
+	}
 }
