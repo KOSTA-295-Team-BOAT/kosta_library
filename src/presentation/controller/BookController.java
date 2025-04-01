@@ -9,6 +9,7 @@ import business.dto.BookRent;
 import business.dto.RentDetail;
 import business.dto.User;
 import business.service.book.BookRentService;
+import business.service.book.BookReservationService;
 import business.service.book.BookSearchService;
 import exception.DmlException;
 import exception.SearchWrongException;
@@ -136,5 +137,18 @@ public class BookController {
 		return rentDetail;
 		
 	}
+	
+
+    public boolean reserveBook(String userId, int bookUid) {
+    	BookReservationService reservationService = new BookReservationService();
+        try {
+			return reservationService.reserveBook(userId, bookUid);
+		} catch (DmlException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+    }
+
 	
 }
