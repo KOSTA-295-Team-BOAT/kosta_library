@@ -120,4 +120,19 @@ public class Book {
                 ", bookStatus=" + bookStatus +
                 '}'+'\n';
     }
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Book book = (Book) o;
+		return bookUid == book.bookUid;
+	}
+
+	@Override
+	public int hashCode() {
+		return Integer.hashCode(bookUid);
+	}
 }
