@@ -15,7 +15,7 @@ public interface BookRentDao {
     void addBookRent(BookRent bookRent);
 
     // 대여 ID로 조회
-    BookRent getBookRentById(String rentUid);
+	BookRent getBookRentById(Connection con, int rentUid) throws SQLException;
 
     // 모든 대여 조회
     List<BookRent> getAllBookRents();
@@ -28,4 +28,9 @@ public interface BookRentDao {
 
     //커넥션 받아서 추가
 	BookRent addBookRent(Connection con, BookRent bookRent) throws SQLException, DmlException;
+
+	void updateRentStatus(Connection con, int rentUid, int status) throws SQLException;
+
+	void updateRentStatusAndReturnDate(Connection con, int rentUid, int status, String returnDate) throws SQLException;
+
 }

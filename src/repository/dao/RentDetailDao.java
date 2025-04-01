@@ -21,4 +21,10 @@ public interface RentDetailDao {
 	//특정 유저의 대여 상세 조회
 	List<RentDetail> getRentDetailByUserId(Connection con, String userId) throws SQLException;
 
+	List<RentDetail> getNotReturnedDetailByRentUid(Connection con, int rentUid) throws SQLException;
+
+	void updateRentDetail(Connection con, RentDetail rentDetail) throws SQLException;
+
+	RentDetail getRentDetailById(Connection con, int rentDetailUid) throws SQLException;
+
 }

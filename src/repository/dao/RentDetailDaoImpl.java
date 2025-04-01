@@ -57,7 +57,7 @@ public class RentDetailDaoImpl implements RentDetailDao {
 			ps = con.prepareStatement(query);
 			ps.setString(1, userId);
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				rentDetail = new RentDetail(rs.getInt("rent_detail_uid"), rs.getInt("book_uid"), rs.getInt("rent_uid"),
 						rs.getInt("rent_return_state"), rs.getString("rent_return_due"));
 				rentDetailList.add(rentDetail);
@@ -69,4 +69,45 @@ public class RentDetailDaoImpl implements RentDetailDao {
 		return rentDetailList;
 	}
 
+	@Override
+	public RentDetail getRentDetailById(Connection con, int rentDetailUid) throws SQLException {
+		String query = "SELECT * FROM rent_detail WHERE rent_detail_uid = ?";
+		try (PreparedStatement ps = con.prepareStatement(query)) {
+			ps.setInt(1, rentDetailUid);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return new RentDetail(rs.getInt("rent_detail_uid"), rs.getInt("book_uid"), rs.getInt("rent_uid"),
+							rs.getInt("rent_return_state"), rs.getString("rent_return_due"));
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void updateRentDetail(Connection con, RentDetail rentDetail) throws SQLException {
+		String query = "UPDATE rent_detail SET rent_return_state = ? WHERE rent_detail_uid = ?";
+		try (PreparedStatement ps = con.prepareStatement(query)) {
+			ps.setInt(1, rentDetail.getRentReturnState());
+			ps.setInt(2, rentDetail.getRentDetailUid());
+			ps.executeUpdate();
+		}
+	}
+
+	@Override
+	public List<RentDetail> getNotReturnedDetailByRentUid(Connection con, int rentUid) throws SQLException {
+		List<RentDetail> list = new ArrayList<>();
+		String query = "SELECT * FROM rent_detail WHERE rent_uid = ? AND rent_return_state = 0";
+		try (PreparedStatement ps = con.prepareStatement(query)) {
+			ps.setInt(1, rentUid);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					RentDetail detail = new RentDetail(rs.getInt("rent_detail_uid"), rs.getInt("book_uid"),
+							rs.getInt("rent_uid"), rs.getInt("rent_return_state"), rs.getString("rent_return_due"));
+					list.add(detail);
+				}
+			}
+		}
+		return list;
+	}
 }
