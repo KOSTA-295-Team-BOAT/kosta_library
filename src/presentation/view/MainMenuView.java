@@ -5,7 +5,7 @@ import java.util.Scanner;
 import presentation.controller.BookController;
 
 public class MainMenuView {
-
+	
     public void display() {
         Scanner sc = new Scanner(System.in);
         int menu;
@@ -61,6 +61,8 @@ public class MainMenuView {
                         break;
                     case 2:
                         System.out.println("도서 반납 기능 실행");
+                        BookReturnView bookReturnView = new BookReturnView();
+                        bookReturnView.display();
                         break;
                     case 3:
                         System.out.println("도서 예약 기능 실행");
