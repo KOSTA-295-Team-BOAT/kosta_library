@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- 카테고리 샘플 데이터 입력
 truncate table book_category;
-insert into book_category (category_uid, category_name) value (1 ,'JAVA'); -- 첫 데이터 입력
+insert into book_category (category_name) value ('JAVA'); -- 첫 데이터 입력
 insert into book_category (category_name) value ('웹 프로그래밍');
 insert into book_category (category_name) value ('임베디드 프로그래밍');
 insert into book_category (category_name) value ('디자인 패턴');
@@ -99,74 +99,76 @@ insert into course (course_name, course_open, course_graduate_date) value
 
 select * from course_recommend;
 truncate table course_recommend;
--- Java 기반 풀스택 개발자 양성과정 1기 (course_uid = 5)
+-- Java 기반 풀스택 개발자 양성과정 1기 (course_uid = 1)
 INSERT INTO course_recommend (course_uid, book_uid) VALUES
-(5, 1),  -- java의 정석
-(5, 2),  -- 이것이 자바다
-(5, 3),  -- 자바 코드의 품질을 높이는 100가지 방법
-(5, 23), -- 스프링 프레임워크 첫걸음
-(5, 24); -- JSP + 스프링
+(1, 1),  -- java의 정석
+(1, 2),  -- 이것이 자바다
+(1, 3),  -- 자바 코드의 품질을 높이는 100가지 방법
+(1, 23), -- 스프링 프레임워크 첫걸음
+(1, 24); -- JSP + 스프링
 
--- 임베디드 개발자 양성과정 (course_uid = 6)
+-- 임베디드 개발자 양성과정 (course_uid = 2)
 INSERT INTO course_recommend (course_uid, book_uid) VALUES
-(6, 13), -- 임베디드 리눅스 프로그래밍 완전정복
-(6, 14), -- 라즈베리파이로 시작하는 핸드메이드 IoT
-(6, 15), -- 회로 설계 규칙
-(6, 16), -- 기초 DSP와 제어 시스템
-(6, 17); -- 혼자 공부하는 C 언어
+(2, 13), -- 임베디드 리눅스 프로그래밍 완전정복
+(2, 14), -- 라즈베리파이로 시작하는 핸드메이드 IoT
+(2, 15), -- 회로 설계 규칙
+(2, 16), -- 기초 DSP와 제어 시스템
+(2, 17); -- 혼자 공부하는 C 언어
 
--- Java 기반 풀스택 개발자 양성과정 2기 (course_uid = 7)
+-- Java 기반 풀스택 개발자 양성과정 2기 (course_uid = 3)
 INSERT INTO course_recommend (course_uid, book_uid) VALUES
-(7, 1),  -- java의 정석
-(7, 2),  -- 이것이 자바다
-(7, 3),  -- 자바 코드의 품질을 높이는 100가지 방법
-(7, 23), -- 스프링 프레임워크 첫걸음
-(7, 24); -- JSP + 스프링
+(3, 1),  -- java의 정석
+(3, 2),  -- 이것이 자바다
+(3, 3),  -- 자바 코드의 품질을 높이는 100가지 방법
+(3, 23), -- 스프링 프레임워크 첫걸음
+(3, 24); -- JSP + 스프링
 
--- 스프링 백엔드 단기 완성 과정 1기 (course_uid = 8)
+-- 스프링 백엔드 단기 완성 과정 1기 (course_uid = 4)
 INSERT INTO course_recommend (course_uid, book_uid) VALUES
-(8, 23), -- 스프링 프레임워크 첫걸음
-(8, 24), -- JSP + 스프링
-(8, 25), -- 실용적인 스프링 가이드
-(8, 3),  -- 자바 코드의 품질을 높이는 100가지 방법
-(8, 22); -- 디자인 패턴 핵심 10가지
+(4, 23), -- 스프링 프레임워크 첫걸음
+(4, 24), -- JSP + 스프링
+(4, 25), -- 실용적인 스프링 가이드
+(4, 3),  -- 자바 코드의 품질을 높이는 100가지 방법
+(4, 22); -- 디자인 패턴 핵심 10가지
 
--- 리액트 완전 고수되기 과정 1기 (course_uid = 9)
+-- 리액트 완전 고수되기 과정 1기 (course_uid = 5)
 INSERT INTO course_recommend (course_uid, book_uid) VALUES
-(9, 4),  -- 코딩은 처음이라 with 자바
-(9, 5),  -- 패턴으로 익히는 리액트
-(9, 6),  -- 모던 리액트 Deep Dive
-(9, 7),  -- 리액트의 정석
-(9, 11); -- 초보자를 위한 JavaScript 200제
+(5, 4),  -- 코딩은 처음이라 with 자바
+(5, 5),  -- 패턴으로 익히는 리액트
+(5, 6),  -- 모던 리액트 Deep Dive
+(5, 7),  -- 리액트의 정석
+(5, 11); -- 초보자를 위한 JavaScript 200제
 
--- 코딩테스트 완전정복 취업 뽀개기 과정 1기 (course_uid = 10)
+-- 코딩테스트 완전정복 취업 뽀개기 과정 1기 (course_uid = 6)
 INSERT INTO course_recommend (course_uid, book_uid) VALUES
-(10, 27), -- 이것이 취업을 위한 코딩 테스트다
-(10, 28), -- 알고리즘 문제 해결 전략 1권
-(10, 29), -- 알고리즘 문제 해결 전략 2권
-(10, 30), -- 자바스크립트 편
-(10, 31), -- 자바 편 문제 풀이 전략
-(10, 32); -- Do it! 알고리즘 코딩 테스트
+(6, 27), -- 이것이 취업을 위한 코딩 테스트다
+(6, 28), -- 알고리즘 문제 해결 전략 1권
+(6, 29), -- 알고리즘 문제 해결 전략 2권
+(6, 30), -- 자바스크립트 편
+(6, 31), -- 자바 편 문제 풀이 전략
+(6, 32); -- Do it! 알고리즘 코딩 테스트
 
--- 리액트 완전 고수되기 과정 2기 (course_uid = 11)
+-- 리액트 완전 고수되기 과정 2기 (course_uid = 7)
 INSERT INTO course_recommend (course_uid, book_uid) VALUES
-(11, 5),  -- 패턴으로 익히는 리액트
-(11, 6),  -- 모던 리액트 Deep Dive
-(11, 7),  -- 리액트의 정석
-(11, 9),  -- HTML5 + CSS3 웹 표준의 정석
-(11, 10); -- JS + HTML5 웹프로그래밍 기초
+(7, 5),  -- 패턴으로 익히는 리액트
+(7, 6),  -- 모던 리액트 Deep Dive
+(7, 7),  -- 리액트의 정석
+(7, 9),  -- HTML5 + CSS3 웹 표준의 정석
+(7, 10); -- JS + HTML5 웹프로그래밍 기초
 
--- 코딩테스트 완전정복 취업 뽀개기 과정 2기 (course_uid = 12)
+-- 코딩테스트 완전정복 취업 뽀개기 과정 2기 (course_uid = 8)
 INSERT INTO course_recommend (course_uid, book_uid) VALUES
-(12, 27), -- 이것이 취업을 위한 코딩 테스트다
-(12, 28), -- 알고리즘 문제 해결 전략 1권
-(12, 29), -- 알고리즘 문제 해결 전략 2권
-(12, 30), -- 자바스크립트 편
-(12, 31), -- 자바 편 문제 풀이 전략
-(12, 32); -- Do it! 알고리즘 코딩 테스트
+(8, 27), -- 이것이 취업을 위한 코딩 테스트다
+(8, 28), -- 알고리즘 문제 해결 전략 1권
+(8, 29), -- 알고리즘 문제 해결 전략 2권
+(8, 30), -- 자바스크립트 편
+(8, 31), -- 자바 편 문제 풀이 전략
+(8, 32); -- Do it! 알고리즘 코딩 테스트
 --------------------------------------------------------------------------------
 -- truncate 체크 다시 켜기
 SET FOREIGN_KEY_CHECKS = 1;
+select * from course;
+select * from course_recommend;
 
 
 
