@@ -1,8 +1,10 @@
 package presentation.view;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import business.dto.User;
 import business.service.book.UserdataEditService; // UserdataEditService import 추가
@@ -55,25 +57,41 @@ public class MyUserdataEditView {
                     user.setUserName(newName); // 사용자 객체에 이름 설정
                     return; // 변경된 이름 반환
                 case 2:
-                    System.out.println("====== 관심 카테고리 변경 ======.");
+                    System.out.println("====== 관심 카테고리 변경 ======");
                     System.out.println("현재 관심 카테고리: " + (favoriteCategoryNames.isEmpty() ? "없음" : String.join(", ", favoriteCategoryNames)));
                     System.out.println("사용 가능한 카테고리 목록:");
                     bookCategoryDao.getAllCategories().forEach(category -> 
                         System.out.println("ID: " + category.getCategoryUid() + ", 이름: " + category.getCategoryName())
                     );
+
+                    // 기존 관심 카테고리 ID 조회
+                    Set<Integer> existingCategoryIds = new HashSet<>(favoriteCategories != null ? favoriteCategories : new ArrayList<>());
+
                     System.out.println("추가할 관심 카테고리 ID를 쉼표로 구분하여 입력하세요 (예: 1,2,3): ");
                     String[] inputCategories = scanner.nextLine().split(",");
+                    Set<Integer> newCategoryIds = new HashSet<>();
+
+                    // 중복 체크 및 새로운 카테고리 추가
                     for (String categoryId : inputCategories) {
                         try {
                             int categoryUid = Integer.parseInt(categoryId.trim());
-                            new UserdataEditService().addUserFavoriteCategory(user.getUserId(), categoryUid);
-                            String categoryName = bookCategoryDao.getCategoryById(categoryUid).getCategoryName();
-                            if (categoryName != null && !favoriteCategoryNames.contains(categoryName)) {
-                                favoriteCategoryNames.add(categoryName);
-                                favoriteCategories.add(categoryUid); // 관심 카테고리 ID 추가
+                            if (!existingCategoryIds.contains(categoryUid)) {
+                                newCategoryIds.add(categoryUid);
+                            } else {
+                                System.out.println("⚠ 이미 등록된 카테고리 ID " + categoryUid + "는 제외됩니다.");
                             }
                         } catch (NumberFormatException e) {
-                            System.out.println("잘못된 입력: " + categoryId);
+                            System.out.println("❌ 숫자 형식이 잘못된 입력: " + categoryId);
+                        }
+                    }
+
+                    // 새로운 카테고리만 DB에 추가
+                    for (int categoryUid : newCategoryIds) {
+                        new UserdataEditService().addUserFavoriteCategory(user.getUserId(), categoryUid);
+                        String categoryName = bookCategoryDao.getCategoryById(categoryUid).getCategoryName();
+                        if (categoryName != null && !favoriteCategoryNames.contains(categoryName)) {
+                            favoriteCategoryNames.add(categoryName);
+                            favoriteCategories.add(categoryUid);
                         }
                     }
                     break;
