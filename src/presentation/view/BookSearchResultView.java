@@ -13,15 +13,18 @@ public class BookSearchResultView {
 	final int MAX_BOOK_NAME_LENGTH = 45;
 	Scanner scanner = new Scanner(System.in);
 	BookController controller;
-
+	
 	BookSearchResultView(BookController controller) {
 		// 생성자 주입으로 컨트롤러 초기화
 		this.controller = controller;
 	}
-
+	
+	
+	List<Book> book =null;
 	void display(List<Book> book) {
 		if (book==null)
 			return;
+		this.book=book;
 		System.out.println("도서 검색 결과");
 //		System.out.println(book);
 		boolean isRunning = true;
@@ -50,11 +53,18 @@ public class BookSearchResultView {
 				case "p" -> currentPage=prevPage(currentPage);
 				case "n" -> currentPage=nextPage(currentPage,maxPage);
 				case "c" -> System.out.println("북카트에 담기 기능(구현예정)");
-				case "1" -> book.set(bookStartIndex + 0, callRent(book.get((bookStartIndex + 0))));
-				case "2" -> book.set(bookStartIndex + 1, callRent(book.get((bookStartIndex + 1))));
-				case "3" -> book.set(bookStartIndex + 2, callRent(book.get((bookStartIndex + 2))));
-				case "4" -> book.set(bookStartIndex + 3, callRent(book.get((bookStartIndex + 3))));
-				case "5" -> book.set(bookStartIndex + 4, callRent(book.get((bookStartIndex + 4))));
+				
+				case "1" -> book.set(bookStartIndex + 0, displayBookDetail(book.get((bookStartIndex + 0))));
+				case "2" -> book.set(bookStartIndex + 1, displayBookDetail(book.get((bookStartIndex + 1))));
+				case "3" -> book.set(bookStartIndex + 2, displayBookDetail(book.get((bookStartIndex + 2))));
+				case "4" -> book.set(bookStartIndex + 3, displayBookDetail(book.get((bookStartIndex + 3))));
+				case "5" -> book.set(bookStartIndex + 4, displayBookDetail(book.get((bookStartIndex + 4))));
+				
+//				case "1" -> book.set(bookStartIndex + 0, callRent(book.get((bookStartIndex + 0))));
+//				case "2" -> book.set(bookStartIndex + 1, callRent(book.get((bookStartIndex + 1))));
+//				case "3" -> book.set(bookStartIndex + 2, callRent(book.get((bookStartIndex + 2))));
+//				case "4" -> book.set(bookStartIndex + 3, callRent(book.get((bookStartIndex + 3))));
+//				case "5" -> book.set(bookStartIndex + 4, callRent(book.get((bookStartIndex + 4))));
 				case "b" -> isRunning=false;
 				default -> System.out.println("잘못된 입력입니다.");
 				}
@@ -88,6 +98,13 @@ public class BookSearchResultView {
 			System.out.println(book.get((((currentPage - 1) * DISPLAY_BOOK_PER_PAGE) + i)));
 	}
 
+	Book displayBookDetail(Book book) {
+		BookDetailView view = new BookDetailView();
+		book = view.display(book);
+		return book;
+		
+	}
+	
 	Book callRent(Book book) {
 		try {
 			controller.rentOneBook(makeIdOnlyDto(SessionManager.getCurrentUserId()), book);
