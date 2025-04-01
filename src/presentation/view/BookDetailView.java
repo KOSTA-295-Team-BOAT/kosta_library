@@ -5,15 +5,18 @@ import java.util.Scanner;
 import business.dto.Book;
 import business.service.book.BookRentService;
 import business.service.book.BookReservationService;
+import presentation.controller.BookController;
 import util.SessionManager;
 
 public class BookDetailView {
     private final Scanner scanner = new Scanner(System.in);
+
     private final BookRentService rentService = new BookRentService();
     private final BookReservationService reservationService = new BookReservationService();
-
-    public void display(Book book) {
-        while (true) {
+    public Book display(Book book) {
+    	BookController controller = new BookController();        
+    	while (true) {
+    		book = controller.getBookById(book.getBookUid());
             System.out.println("\n===== 도서 상세 정보 =====");
             System.out.println("도서명: " + book.getBookName());
             System.out.println("저자: " + book.getBookAuthor());
@@ -33,7 +36,7 @@ public class BookDetailView {
                         } else {
                             System.out.println("도서 대여에 실패했습니다.");
                         }
-                        return;
+                        return book;
                     } else {
                         System.out.println("현재 대여중인 도서입니다.");
                     }
@@ -47,13 +50,13 @@ public class BookDetailView {
                         } else {
                             System.out.println("도서 예약에 실패했습니다.");
                         }
-                        return;
+                        return book;
                     } else {
                         System.out.println("대여 가능한 도서는 예약할 수 없습니다.");
                     }
                     break;
                 case "b":
-                    return;
+                    return book;
                 default:
                     System.out.println("잘못된 입력입니다.");
             }
