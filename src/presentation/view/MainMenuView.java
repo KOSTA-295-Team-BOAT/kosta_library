@@ -67,6 +67,8 @@ public class MainMenuView {
                         break;
                     case 3:
                         System.out.println("도서 예약 기능 실행");
+                        BookReservationView bookReservationView = new BookReservationView();
+                        bookReservationView.display();
                         break;
                     case 4:
                         return;

@@ -1,6 +1,9 @@
 package repository.dao;
 
 import business.dto.BookReservation;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -21,4 +24,12 @@ public interface BookReservationDao {
 
     // 예약 삭제
     void deleteReservation(int reservationUid);
+
+	List<BookReservation> getActiveReservationsByUserId(Connection con, String userId) throws SQLException;
+
+	boolean userAlreadyReserved(Connection con, String userId, int bookUid) throws SQLException;
+
+	BookReservation getActiveReservationByBookUid(Connection con, int bookUid) throws SQLException;
+
+	void addReservation(Connection con, BookReservation reservation);
 }

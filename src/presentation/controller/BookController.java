@@ -6,9 +6,11 @@ import java.util.List;
 
 import business.dto.Book;
 import business.dto.BookRent;
+import business.dto.BookReservation;
 import business.dto.RentDetail;
 import business.dto.User;
 import business.service.book.BookRentService;
+import business.service.book.BookReservationService;
 import business.service.book.BookSearchService;
 import exception.DmlException;
 import exception.SearchWrongException;
@@ -136,5 +138,28 @@ public class BookController {
 		return rentDetail;
 		
 	}
+	
+
+    public boolean reserveBook(String userId, int bookUid) {
+    	BookReservationService reservationService = new BookReservationService();
+        try {
+			return reservationService.reserveBook(userId, bookUid);
+		} catch (DmlException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+    }
+
+    public List<BookReservation> getActiveReservationsByUserId(String userId) {
+        BookReservationService service = new BookReservationService();
+        try {
+            return service.getActiveReservationsByUserId(userId);
+        } catch (Exception e) {
+            System.out.println("예약 정보 조회 중 오류가 발생했습니다.");
+            return new ArrayList<>();
+        }
+    }
+    
 	
 }
