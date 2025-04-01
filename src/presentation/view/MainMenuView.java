@@ -57,7 +57,8 @@ public class MainMenuView {
                 int choice = Integer.parseInt(sc.nextLine());
                 switch (choice) {
                     case 1:
-                        System.out.println("도서 대여 기능 실행");
+                        BookCartView bookCartView = new BookCartView();
+                        bookCartView.display();
                         break;
                     case 2:
                         System.out.println("도서 반납 기능 실행");
