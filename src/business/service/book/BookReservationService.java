@@ -78,7 +78,7 @@ public class BookReservationService {
             return true;
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw new DmlException("예약 처리 중 오류가 발생했습니다.");
         } finally {
             DbManager.close(con, null, null);

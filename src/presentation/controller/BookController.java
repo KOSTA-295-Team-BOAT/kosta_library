@@ -145,8 +145,8 @@ public class BookController {
         try {
 			return reservationService.reserveBook(userId, bookUid);
 		} catch (DmlException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		return false;
     }
@@ -160,6 +160,19 @@ public class BookController {
             return new ArrayList<>();
         }
     }
+
+	public boolean rentBook(String userId, int bookUid) {
+		BookRentService service;
+		boolean result = false;
+		service = new BookRentService();
+		try {
+			result = service.rentBook(userId, bookUid);
+		} catch (Exception e) {
+//			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
     
 	
 }

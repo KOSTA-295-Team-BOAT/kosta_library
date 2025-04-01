@@ -8,6 +8,7 @@ import java.util.Set;
 
 import business.dto.User;
 import business.service.book.UserdataEditService; // UserdataEditService import 추가
+import exception.SearchWrongException;
 import repository.dao.BookCategoryDao;
 import repository.dao.BookCategoryDaoImpl;
 
@@ -24,7 +25,12 @@ public class MyUserdataEditView {
         // 관심 카테고리 이름 가져오기
         if (favoriteCategories != null) {
             for (int categoryUid : favoriteCategories) {
-                String categoryName = bookCategoryDao.getCategoryById(categoryUid).getCategoryName();
+                String categoryName = null;
+				try {
+					categoryName = bookCategoryDao.getCategoryById(categoryUid).getCategoryName();
+				} catch (SearchWrongException e) {
+					System.out.println(e.getMessage());//뷰니까 여기서 찍어줘야 함
+				}
                 if (categoryName != null) {
                     favoriteCategoryNames.add(categoryName);
                 }
@@ -60,9 +66,14 @@ public class MyUserdataEditView {
                     System.out.println("====== 관심 카테고리 변경 ======");
                     System.out.println("현재 관심 카테고리: " + (favoriteCategoryNames.isEmpty() ? "없음" : String.join(", ", favoriteCategoryNames)));
                     System.out.println("사용 가능한 카테고리 목록:");
-                    bookCategoryDao.getAllCategories().forEach(category -> 
+				try {
+					bookCategoryDao.getAllCategories().forEach(category -> 
                         System.out.println("ID: " + category.getCategoryUid() + ", 이름: " + category.getCategoryName())
                     );
+				} catch (SearchWrongException e) {
+//					e.printStackTrace();
+					System.out.println(e.getMessage());
+				}
 
                     // 기존 관심 카테고리 ID 조회
                     Set<Integer> existingCategoryIds = new HashSet<>(favoriteCategories != null ? favoriteCategories : new ArrayList<>());
@@ -88,7 +99,13 @@ public class MyUserdataEditView {
                     // 새로운 카테고리만 DB에 추가
                     for (int categoryUid : newCategoryIds) {
                         new UserdataEditService().addUserFavoriteCategory(user.getUserId(), categoryUid);
-                        String categoryName = bookCategoryDao.getCategoryById(categoryUid).getCategoryName();
+                        String categoryName = null;
+						try {
+							categoryName = bookCategoryDao.getCategoryById(categoryUid).getCategoryName();
+						} catch (SearchWrongException e) {
+//							e.printStackTrace();
+							System.out.println(e.getMessage());
+						}
                         if (categoryName != null && !favoriteCategoryNames.contains(categoryName)) {
                             favoriteCategoryNames.add(categoryName);
                             favoriteCategories.add(categoryUid);

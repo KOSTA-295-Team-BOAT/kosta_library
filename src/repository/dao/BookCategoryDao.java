@@ -1,6 +1,8 @@
 package repository.dao;
 
 import business.dto.BookCategory;
+import exception.SearchWrongException;
+
 import java.util.List;
 
 /**
@@ -13,10 +15,10 @@ public interface BookCategoryDao {
     void addCategory(BookCategory category);
 
     // 카테고리 ID로 조회
-    BookCategory getCategoryById(int categoryId);
+    BookCategory getCategoryById(int categoryId) throws SearchWrongException;
 
     // 모든 카테고리 조회
-    List<BookCategory> getAllCategories();
+    List<BookCategory> getAllCategories() throws SearchWrongException;
 
     // 카테고리 이름으로 조회
     BookCategory getCategoryByName(String categoryName);

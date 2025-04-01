@@ -1,6 +1,7 @@
 package repository.dao;
 
 import business.dto.BookCategory;
+import exception.SearchWrongException;
 import repository.util.DbManager;
 
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class BookCategoryDaoImpl implements BookCategoryDao {
 	@Override
-	public BookCategory getCategoryById(int categoryId) {
+	public BookCategory getCategoryById(int categoryId) throws SearchWrongException {
 		String sql = "SELECT * FROM book_category WHERE category_uid = ?";
 		try (Connection con = DbManager.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, categoryId);
@@ -22,7 +23,8 @@ public class BookCategoryDaoImpl implements BookCategoryDao {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			throw new SearchWrongException("카테고리를 검색할 수 없습니다");
 		}
 		return null;
 	}
@@ -34,7 +36,7 @@ public class BookCategoryDaoImpl implements BookCategoryDao {
 	}
 
 	@Override
-	public List<BookCategory> getAllCategories() {
+	public List<BookCategory> getAllCategories() throws SearchWrongException {
 		List<BookCategory> categories = new ArrayList<>();
 		String sql = "SELECT * FROM book_category";
 		
@@ -49,7 +51,8 @@ public class BookCategoryDaoImpl implements BookCategoryDao {
 				));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			throw new SearchWrongException("카테고리를 검색할 수 없습니다.");
 		}
 		return categories; // 항상 List 반환 (비어있더라도 null이 아님)
 	}
