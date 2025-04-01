@@ -12,7 +12,7 @@ import java.util.List;
  * @since 2025.3.27
  */
 public interface UserDao {
-    // TODO : 메소드명 수정 부탁해요.
+    
     // 회원 추가 (user_name 포함)
     void addUser(User user);
 

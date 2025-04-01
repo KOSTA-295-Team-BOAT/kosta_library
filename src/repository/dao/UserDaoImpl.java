@@ -6,13 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import business.dto.User;
 import repository.util.DbManager;
 
 /**
  * 사용자 관련 DAO 구현 클래스
+ * @author 황태윤
  */
 public class UserDaoImpl implements UserDao {
 
@@ -149,6 +152,24 @@ public class UserDaoImpl implements UserDao {
 		}
 		return favoriteCategories;
 	}
+
+	public Set<Integer> getUserCategoryIds(String userId) {
+        Set<Integer> ids = new HashSet<>();
+        String sql = "SELECT category_uid FROM user_favorite WHERE user_id = ?";
+        
+        try (Connection con = DbManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ids.add(rs.getInt("category_uid"));
+            }
+        } catch (SQLException e) {
+            System.err.println("getUserCategoryIds 실행 중 오류 발생: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return ids;
+    }
 
 	public void addUserFavoriteCategory(String userId, int categoryUid) {
 		String sql = "INSERT INTO user_favorite (user_id, category_uid) VALUES (?, ?)";
