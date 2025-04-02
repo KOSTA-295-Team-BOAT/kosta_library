@@ -34,13 +34,6 @@ B.O.A.T (Books Of All Time)
 
 ## 개발 일정
 
-<aside>
-📋
-
-**Trello : https://trello.com/w/kosta417/home**
-
-</aside>
-
 #️⃣ 전체 일정
 
 - 2025.03.14 ~ 2025.04.02
