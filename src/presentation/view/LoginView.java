@@ -22,8 +22,7 @@ public class LoginView {
     public void printLoginSuccess() {
     	System.out.println("");
     	System.out.println("로그인 성공! 메인 화면으로 이동합니다.");
-		System.out.println("엔터를 누르면 진행합니다 ...");
-		new Scanner(System.in).nextLine();
+
     }
 
     public void printLoginFail() {

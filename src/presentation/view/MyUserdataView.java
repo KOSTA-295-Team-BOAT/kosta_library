@@ -78,8 +78,7 @@ public class MyUserdataView {
 		}
 		System.out.println("---------------------------------------------------------------------------------");
 		
-		System.out.print("엔터를 누르면 진행합니다...");
-		new Scanner(System.in).nextLine();
+
 
 		// 마이페이지 메인 화면으로 돌아가기
 		// new MyPageMainView().display();

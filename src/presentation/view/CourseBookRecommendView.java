@@ -60,8 +60,7 @@ public class CourseBookRecommendView {
     	System.out.println("추천할 도서가 없습니다.");
     	System.out.println();
     	System.out.println("--------------------------------------------------------------------------------");
-		System.out.println("엔터를 누르면 진행합니다 ...");
-		new Scanner(System.in).nextLine();
+
     }
     private void displayBookList(List<Book> books, int page) {
 //        System.out.println("\n=== 추천 도서 목록 ===");
@@ -77,8 +76,6 @@ public class CourseBookRecommendView {
             );
         }
         System.out.println("--------------------------------------------------------------------------------");
-		System.out.println("엔터를 누르면 진행합니다 ...");
-		new Scanner(System.in).nextLine();
     }
     void displayMenu() {
     	System.out.println("");
