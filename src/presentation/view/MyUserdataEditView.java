@@ -150,8 +150,7 @@ public class MyUserdataEditView {
 				break;
 			case 4:
 				System.out.println("회원정보 수정 화면을 종료합니다.");
-				System.out.println("엔터를 누르면 진행합니다 ... ");
-				scanner.nextLine();
+
 				return;
 			default:
 				CommonMessageView.wrongInput(); // 잘못된 입력입니다 메시지

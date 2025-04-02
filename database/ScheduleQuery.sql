@@ -18,20 +18,25 @@ BEGIN
     UPDATE book
     SET book_status = 1
     WHERE book.book_uid IN (
-        SELECT book_uid FROM rent_detail WHERE rent_return_due < NOW()
+        SELECT book_uid FROM rent_detail WHERE rent_return_due < NOW() and book_uid is not null AND book_uid != ''
+        -- update하는 테이블의 pk로 조건비교하지 않으면 Safe Update Mode에 걸려서 실행이 안됨
     );
 
     -- 수료 회원 상태 변경
     UPDATE user
     SET user_status = 1
     WHERE course_uid IN (
-        SELECT course_uid FROM course WHERE course_graduate_date < NOW()
+        SELECT course_uid FROM course WHERE course_graduate_date < NOW() and user_id is not null AND user_id != '' 
+        -- update하는 테이블의 pk로 조건비교하지 않으면 Safe Update Mode에 걸려서 실행이 안됨
     );
 
     -- 예약 만료 상태 변경
     UPDATE book_reservation
     SET reservation_status = 1
-    WHERE reservation_status = 0 AND reservation_due < NOW();
+    WHERE reservation_status = 0 AND reservation_due < NOW() and reservation_uid is not null AND reservation_uid != '';
+    -- update하는 테이블의 pk로 조건비교하지 않으면 Safe Update Mode에 걸려서 실행이 안됨
+
+SHOW INDEX FROM book_reservation;
 
 	-- 필요에 따라 추가
     

@@ -78,7 +78,6 @@ public class MainView {
     	System.out.println("");
     	ClearScreen.clear();
         System.out.println("프로그램을 종료합니다. 이용해주셔서 감사합니다.");
-		System.out.println("엔터를 누르면 종료합니다 ...");
-		new Scanner(System.in).nextLine();
+
     }
 }

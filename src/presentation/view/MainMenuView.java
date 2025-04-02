@@ -28,8 +28,7 @@ public class MainMenuView {
                     break;
                 case 5:
                     System.out.println("시스템에서 로그아웃합니다.");
-    				System.out.println("엔터를 누르면 진행합니다 ...");
-    				new Scanner(System.in).nextLine();
+
                     return;
                 default:
                 	CommonMessageView.wrongInput(); //잘못된 입력입니다 메시지

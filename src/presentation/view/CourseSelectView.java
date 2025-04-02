@@ -98,8 +98,7 @@ public class CourseSelectView {
                 System.out.println("숫자를 입력해주세요.");
             }
         }
-		System.out.println("엔터를 누르면 진행합니다 ...");
-		new Scanner(System.in).nextLine();
+
         return selectedCourseIds;
     }
 }

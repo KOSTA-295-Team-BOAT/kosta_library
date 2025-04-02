@@ -79,8 +79,6 @@ public class BookSearchResultView {
 				CommonMessageView.wrongInput(); //잘못된 입력입니다 메시지
 			}
 		}
-		System.out.println("엔터를 누르면 진행합니다 ...");
-		new Scanner(System.in).nextLine();
 	}
 
 	User makeIdOnlyDto(String userId) { // 세션ID만 있고 유저정보 전체를 들고있지 않은데 Rent에서는 UserDto 전체를 쓰고있다... 리팩토링할 시간 없으니 그냥 어댑터

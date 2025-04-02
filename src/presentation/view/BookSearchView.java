@@ -50,8 +50,6 @@ public class BookSearchView {
 			}
 		} while (isRunningMenu);
 		System.out.println("돌아갑니다."); // while문이 종료되므로 루프를 빠져나온다.
-		System.out.println("엔터를 누르면 진행합니다 ...");
-		new Scanner(System.in).nextLine();
 	}
 	
 	List<Book> inputName() throws SearchWrongException {
@@ -65,7 +63,7 @@ public class BookSearchView {
 	}
 
 	List<Book> inputAuthor() throws SearchWrongException {
-		System.out.println("저자 입력");
+		System.out.print("저자 입력");
 		System.out.print("> ");
 		String input = sc.nextLine();
 		if (input.trim().isEmpty()) {
@@ -75,7 +73,7 @@ public class BookSearchView {
 	}
 
 	List<Book> inputPublisher() throws SearchWrongException {
-		System.out.println("출판사 입력");
+		System.out.print("출판사 입력");
 		System.out.print("> ");
 		String input = sc.nextLine();
 		if (input.trim().isEmpty()) {

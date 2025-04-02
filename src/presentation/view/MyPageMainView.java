@@ -52,8 +52,7 @@ public class MyPageMainView {
 				break;
 			case 3: {
 				System.out.println("마이페이지에서 나갑니다.");
-				System.out.println("엔터를 누르면 진행합니다 ...");
-				new Scanner(System.in).nextLine();
+
 				isRunning = false;
 				break;
 			}
