@@ -38,7 +38,7 @@ public class BookReturnView {
 			returnInfo = controller.returnOneBook(rentDetailList.get(selectNumber - 1).getRentDetailUid());
 			System.out.println(controller.getBookById(returnInfo.getBookUid()).getBookName() + "도서를 반납합니다.");
 		} catch (Exception e) {
-			System.out.println("잘못된 입력입니다");
+			CommonMessageView.wrongInput(); //잘못된 입력입니다 메시지
 		}
 	}
 }

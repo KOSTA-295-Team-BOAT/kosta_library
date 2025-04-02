@@ -2,7 +2,8 @@ package presentation.view;
 
 import business.dto.User; 
 import presentation.controller.UserController;
-import presentation.view.UserRegView; 
+import presentation.view.UserRegView;
+import util.ClearScreen;
 import presentation.view.LoginView; 
 
 import java.util.Scanner;
@@ -33,31 +34,51 @@ public class MainView {
                     break;
 
                 default:
-                    System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
+                    CommonMessageView.wrongInput(); //잘못된 입력입니다 메시지
             }
         } while (menu != 3);
     }
 
     public void printMainView() {
-        System.out.println("[ B.O.A.T ]");
-        System.out.println("===== 시작 메뉴 =====");
-        System.out.println("1. 로그인");
-        System.out.println("2. 회원가입");
-        System.out.println("3. 종료");
+    	System.out.println("");
+    	ClearScreen.clear();
+    	System.out.println("--------------------------------------------------------------------------------");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                             [ B.O.A.T ]                                      |");
+    	System.out.println("|                   Book of All Time : KOSTA Book System                       |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                        도서 대여 및 추천                                     |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("--------------------------------------------------------------------------------");
+    	System.out.println();
+    	System.out.println("                        1. 로그인 | 2. 회원가입 | 3. 종료                       ");
+    	System.out.println();
+    	System.out.println("--------------------------------------------------------------------------------");
+
     }
 
     public int selectMenu() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("메뉴 선택: ");
+        System.out.print("메뉴 선택 > ");
         try {
             return Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException e) {
+        	ClearScreen.clear();
             System.out.println("숫자를 입력해주세요.");
             return -1; // 잘못된 입력 처리
         }
     }
 
     public void printExitMessage() {
+    	System.out.println("");
+    	ClearScreen.clear();
         System.out.println("프로그램을 종료합니다. 이용해주셔서 감사합니다.");
+		System.out.println("엔터를 누르면 종료합니다 ...");
+		new Scanner(System.in).nextLine();
     }
 }

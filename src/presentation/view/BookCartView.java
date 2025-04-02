@@ -32,7 +32,7 @@ public class BookCartView {
                     System.out.println("북카트에서 나갑니다.");
                     return;
                 }
-                default -> System.out.println("잘못된 입력입니다.");
+                default -> CommonMessageView.wrongInput(); //잘못된 입력입니다 메시지
             }
         }
     }

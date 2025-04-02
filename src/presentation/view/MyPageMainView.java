@@ -2,6 +2,7 @@ package presentation.view;
 
 import java.util.Scanner;
 import business.dto.User;
+import util.ClearScreen;
 import util.SessionManager;
 import repository.dao.UserDao;
 import repository.dao.UserDaoImpl;
@@ -17,12 +18,7 @@ public class MyPageMainView {
 		
 		boolean isRunning = true;
 		while (isRunning) {
-			System.out.println("=== 마이페이지 메인 ===");
-			System.out.println("1. 내 정보 확인");
-			System.out.println("2. 내 정보 수정");
-			System.out.println("3. 돌아가기");
-			System.out.print("메뉴 선택: ");
-
+			printMenu();
 			String input = sc.nextLine();
 			int choice;
 			try {
@@ -56,12 +52,40 @@ public class MyPageMainView {
 				break;
 			case 3: {
 				System.out.println("마이페이지에서 나갑니다.");
+				System.out.println("엔터를 누르면 진행합니다 ...");
+				new Scanner(System.in).nextLine();
 				isRunning = false;
 				break;
 			}
 			default:
-				System.out.println("잘못된 선택입니다.");
+				CommonMessageView.wrongInput();// 잘못된 입력입니다 메시지
 			}
 		}
 	}
+	
+	void printMenu() {
+    	System.out.println("");
+    	ClearScreen.clear();
+    	System.out.println("--------------------------------------------------------------------------------");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                             [ B.O.A.T ]                                      |");
+    	System.out.println("|                   Book of All Time : KOSTA Book System                       |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                       실행할 기능을 선택해 주세요                            |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("|                                                                              |");
+    	System.out.println("--------------------------------------------------------------------------------");
+        System.out.println("                                                                                ");
+        System.out.println("1. 내 정보 확인 | 2. 내 정보 수정 | 3. 돌아가기 ");
+		System.out.println();
+		System.out.println("--------------------------------------------------------------------------------");
+        System.out.print("메뉴 선택 > ");
+	}
+	
 }
+
+
